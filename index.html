@@ -14,90 +14,155 @@
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--primary:#010066;--primary-2:#1A2A9C;--accent:#EF3340;--ink:#0f2230;--muted:#5b6b78}
-*{box-sizing:border-box}
-html,body{margin:0;height:100%}
-body{font-family:Nunito,system-ui,sans-serif;color:var(--ink);background:#fff;display:flex;flex-direction:column;min-height:100dvh;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
-.logo{font-weight:800;font-size:1.5rem;color:var(--primary);text-decoration:none;letter-spacing:-.01em}
+:root{--primary:#010066;--accent:#EF3340;--ink:#0f2230;--muted:#64748b;--bg:#f3f4f8;--card:#fff;--tab:64px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg)}
+body{font-family:Nunito,system-ui,sans-serif;color:var(--ink)}
+a{color:inherit}
+.app{position:fixed;inset:0;display:flex;flex-direction:column;max-width:520px;margin:0 auto;background:var(--bg);padding-top:env(safe-area-inset-top)}
+.bar{display:flex;align-items:center;gap:10px;padding:12px 18px 6px;flex:0 0 auto}
+.logo{font-weight:800;font-size:1.65rem;color:var(--primary);text-decoration:none;letter-spacing:-.02em}
 .logo b{color:var(--accent)}
-header{padding:16px 20px;display:flex;align-items:center;gap:10px}
-.tag{font-size:.8rem;font-weight:700;color:var(--muted);background:#f1f3f9;border-radius:999px;padding:3px 10px}
-main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:0 18px 96px}
-.hero h1{font-size:clamp(1.6rem,5.5vw,2.3rem);line-height:1.15;margin:6px 0 6px;color:var(--primary)}
-.hero h1 span{color:var(--accent)}
-.hero p{color:var(--muted);margin:0 0 14px}
-.search{display:flex;align-items:center;gap:10px;background:#f4f6fb;border-radius:14px;padding:12px 14px;color:var(--muted)}
+.seg{margin-left:auto;display:flex;background:#fff;border-radius:999px;padding:4px;box-shadow:0 2px 10px rgba(15,34,48,.06)}
+.seg button{border:0;background:none;font:700 .82rem Nunito,sans-serif;color:var(--muted);padding:7px 11px;border-radius:999px;cursor:pointer}
+.seg button.on{background:var(--primary);color:#fff}
+.back{border:0;background:#fff;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;cursor:pointer;color:var(--primary);box-shadow:0 2px 8px rgba(15,34,48,.06)}
+.ttl{font-weight:800;font-size:1.15rem;color:var(--primary);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.screen{flex:1;min-height:0;overflow-y:auto;padding:0 18px calc(var(--tab) + 18px + env(safe-area-inset-bottom))}
+.screen.fit{overflow:hidden;display:flex;flex-direction:column}
+h1.hl{font-size:clamp(1.35rem,3.6vh,1.75rem);line-height:1.15;margin:clamp(4px,1vh,10px) 0 clamp(8px,1.6vh,14px)}
+h1.hl span{color:var(--accent)}
+.search{display:flex;align-items:center;gap:10px;background:#fff;border-radius:18px;padding:clamp(10px,1.8vh,15px) 16px;color:var(--primary);box-shadow:0 6px 20px rgba(15,34,48,.07);position:relative}
 .search input{border:0;background:none;font:600 1rem Nunito,sans-serif;flex:1;outline:none;color:var(--ink);min-width:0}
-.feature{display:flex;flex-direction:column;gap:2px;margin:14px 0 4px;padding:14px 16px;border-radius:16px;color:#fff;text-decoration:none;background:linear-gradient(135deg,#010066 0%,#010066 55%,#EF3340 140%)}
-.feature .fk{font-size:.85rem;color:#FFD6DA;font-weight:700}
-.feature b{font-size:1.1rem}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0;scrollbar-width:none;position:sticky;top:0;background:#fff;z-index:2}
-.chips::-webkit-scrollbar{display:none}
-.chips button{flex:0 0 auto;border:1px solid #e3e6ef;background:#fff;border-radius:999px;padding:7px 13px;font:700 .85rem Nunito,sans-serif;color:var(--ink);cursor:pointer;white-space:nowrap}
-.chips button.on{background:var(--primary);border-color:var(--primary);color:#fff}
-.cat h2{font-size:1.1rem;color:var(--primary);margin:18px 0 8px;display:flex;align-items:center;gap:8px}
-.cat h2 small{color:var(--muted);font-weight:600;font-size:.8rem}
-.item{border:1px solid #eceef4;border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start}
+.sres{position:absolute;left:0;right:0;top:calc(100% + 6px);background:#fff;border-radius:16px;box-shadow:0 14px 34px rgba(15,34,48,.16);z-index:5;max-height:46vh;overflow:auto;padding:6px}
+.sres a{display:flex;gap:10px;align-items:center;padding:9px 10px;border-radius:10px;text-decoration:none}
+.sres a:hover{background:var(--bg)}
+.sres small{display:block;color:var(--muted);font-size:.78rem}
+.shd{display:flex;align-items:baseline;justify-content:space-between;margin:clamp(10px,2.2vh,20px) 0 clamp(6px,1.2vh,10px)}
+.shd h2{margin:0;font-size:1.15rem}
+.shd a{font-weight:700;font-size:.88rem;color:var(--primary);text-decoration:none;margin-left:14px}
+.big{display:grid;grid-template-columns:1fr 1fr;gap:clamp(8px,1.4vh,12px)}
+.bigt{background:#fff;border-radius:18px;padding:clamp(10px,1.8vh,15px) 12px;display:flex;align-items:center;gap:12px;text-decoration:none;min-height:clamp(56px,9vh,84px);box-shadow:0 2px 10px rgba(15,34,48,.04)}
+.bigt .ic{width:clamp(40px,6vh,50px);height:clamp(40px,6vh,50px);border-radius:14px;display:grid;place-items:center;font-size:clamp(20px,3vh,24px);flex:0 0 auto}
+.bigt b{display:block;font-size:.98rem;line-height:1.2}
+.bigt small{display:block;color:var(--muted);font-size:.8rem;margin-top:2px}
+.icons{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(6px,1.4vh,14px) 4px;margin-top:clamp(10px,2vh,18px)}
+.icons a{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;font:600 .78rem Nunito,sans-serif;text-align:center;line-height:1.15}
+.icons span{width:clamp(42px,6.2vh,52px);height:clamp(42px,6.2vh,52px);border-radius:15px;background:#fff;display:grid;place-items:center;font-size:clamp(19px,2.8vh,23px);box-shadow:0 2px 8px rgba(15,34,48,.05)}
+.promo{margin-top:auto;display:block;border-radius:20px;padding:clamp(12px,2vh,16px) 16px;color:#fff;text-decoration:none;background:linear-gradient(135deg,#010066 0%,#1A2A9C 60%,#EF3340 150%);position:relative}
+.promo .k{font:800 .82rem Nunito,sans-serif;color:#FFD6DA}
+.promo h3{margin:3px 0 0;font-size:clamp(1rem,2.4vh,1.15rem);color:#fff}
+.promo .tag{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.18);border-radius:8px;padding:3px 9px;font:700 .75rem Nunito,sans-serif}
+.promo .chip{display:inline-block;margin-top:8px;background:rgba(255,255,255,.18);border-radius:8px;padding:3px 10px;font:700 .78rem Nunito,sans-serif}
+.item{background:#fff;border-radius:16px;padding:12px 14px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 2px 8px rgba(15,34,48,.04)}
 .item .t{flex:1;min-width:0}
-.item b{display:block;font-size:1rem}
-.item .d{color:var(--muted);font-size:.9rem;margin:2px 0 4px}
-.item .a{font-size:.78rem;font-weight:700;color:var(--primary);background:#eef0fa;border-radius:6px;padding:2px 7px;display:inline-block}
-.item .acts{display:flex;flex-direction:column;gap:6px}
-.item .acts a{font:700 .8rem Nunito,sans-serif;text-decoration:none;border-radius:9px;padding:6px 10px;text-align:center;white-space:nowrap}
-.item .acts .w{background:var(--accent);color:#fff}
-.item .acts .m{border:1px solid #e3e6ef;color:var(--ink)}
-.item.star{border-color:#FDBBC1;background:#FFF7F8}
-.empty{color:var(--muted);text-align:center;padding:30px 0}
-.foot{color:var(--muted);font-size:.8rem;text-align:center;margin-top:24px}
-.install{position:fixed;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));display:none;align-items:center;gap:12px;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:12px 14px;box-shadow:0 10px 30px rgba(15,34,48,.15);max-width:480px;margin:0 auto}
+.item b{display:block}
+.item .d{color:var(--muted);font-size:.88rem;margin:2px 0 6px}
+.item .a{font-size:.75rem;font-weight:700;color:var(--primary);background:#eef0fa;border-radius:6px;padding:2px 7px}
+.item.star{box-shadow:0 0 0 2px #FDBBC1}
+.acts{display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.acts a,.acts button{font:700 .78rem Nunito,sans-serif;text-decoration:none;border-radius:9px;padding:6px 10px;text-align:center;white-space:nowrap;border:0;cursor:pointer}
+.acts .w{background:var(--accent);color:#fff}
+.acts .m{background:var(--bg);color:var(--ink)}
+.acts .s{background:none;font-size:1.05rem;padding:2px}
+.list a.row{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:13px 14px;margin-bottom:8px;text-decoration:none;font-weight:700}
+.list .row small{margin-left:auto;color:var(--muted);font-weight:600}
+.empty{color:var(--muted);text-align:center;padding:40px 10px}
+.note{color:var(--muted);font-size:.82rem;margin:18px 4px}
+.tabbar{position:absolute;left:0;right:0;bottom:0;height:calc(var(--tab) + env(safe-area-inset-bottom));padding:6px 10px env(safe-area-inset-bottom);background:#fff;border-radius:22px 22px 0 0;display:flex;box-shadow:0 -4px 20px rgba(15,34,48,.06)}
+.tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;font:700 .74rem Nunito,sans-serif;color:var(--muted);border-radius:16px}
+.tabbar a svg{width:22px;height:22px}
+.tabbar a.on{color:var(--primary);background:#E6E8F7}
+@media (max-height:720px){h1.hl{font-size:1.25rem;margin:2px 0 8px}.shd{margin:8px 0 6px}.bigt{padding:8px 10px}.icons{margin-top:8px;row-gap:6px}.icons a{font-size:.72rem;gap:4px}.promo{padding:10px 14px}.promo .chip{display:none}}
+.install{position:absolute;left:12px;right:12px;bottom:calc(var(--tab) + 12px + env(safe-area-inset-bottom));display:none;align-items:center;gap:12px;background:#fff;border-radius:16px;padding:12px 14px;box-shadow:0 10px 30px rgba(15,34,48,.18);z-index:9}
 .install.show{display:flex}
 .install img{width:40px;height:40px;border-radius:10px}
-.install p{margin:0;flex:1;font-size:.9rem;color:var(--ink);text-align:left}
-.install button{font:700 .9rem Nunito,sans-serif;border:0;border-radius:10px;cursor:pointer}
+.install p{margin:0;flex:1;font-size:.88rem}
+.install button{font:700 .88rem Nunito,sans-serif;border:0;border-radius:10px;cursor:pointer}
 #installbtn{background:var(--primary);color:#fff;padding:8px 14px}
 #installx{background:none;font-size:1.4rem;color:var(--muted);padding:0 4px}
 </style>
 </head>
 <body>
-<header><a class="logo" href="./" aria-label="MYSG home">MY<b>SG</b></a><span class="tag">Johor directory</span></header>
-<main>
-  <section class="hero">
-    <h1>Moving to Johor, <span>made simple.</span></h1>
-    <p>Companies and services to help you move to and settle in Johor.</p>
-    <label class="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search companies and services" aria-label="Search" autocomplete="off"></label>
-  </section>
-  <a class="feature" href="https://movetomalaysia.com/" target="_blank" rel="noopener"><span class="fk">Need help with your move?</span><b>Visit movetomalaysia.com ↗</b></a>
-  <nav class="chips" id="chips" aria-label="Categories"></nav>
-  <div id="list"></div>
-  <p class="foot">Listings are for information only and are not endorsements. Details change, so check with each company directly.</p>
-</main>
-<div class="install" id="install" role="dialog" aria-label="Install the app"><img src="icons/icon-192.png" alt=""><p id="installtxt"><strong>Install MYSG</strong><br>Add it to your home screen for one-tap access.</p><button id="installbtn">Install</button><button id="installx" aria-label="Dismiss">×</button></div>
+<div class="app">
+  <header class="bar" id="bar"></header>
+  <main class="screen" id="screen"></main>
+  <nav class="tabbar" id="tabbar">
+    <a href="#home" data-t="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
+    <a href="#areas" data-t="areas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg>Map</a>
+    <a href="#saved" data-t="saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>Saved</a>
+    <a href="#more" data-t="more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>More</a>
+  </nav>
+  <div class="install" id="install" role="dialog" aria-label="Install the app"><img src="icons/icon-192.png" alt=""><p id="installtxt"><strong>Install MYSG</strong><br>Add it to your home screen for one-tap access.</p><button id="installbtn">Install</button><button id="installx" aria-label="Dismiss">×</button></div>
+</div>
 <script src="directory.js"></script>
 <script>
 (function(){
-  var D=window.MYSG_DIR, cat='all', q='';
-  var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
-  var chips=document.getElementById('chips'), list=document.getElementById('list');
-  chips.innerHTML=[['all','All']].concat(D.map(function(c){return [c.id,c.icon+' '+c.name];})).map(function(x){return '<button data-c="'+x[0]+'">'+esc(x[1])+'</button>';}).join('');
-  function item(i){
-    var map='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(i[0]+' '+(i[2]==='Nationwide'||i[2]==='Online'?'Johor':i[2]));
-    return '<div class="item'+(i[0]==='Move to Malaysia'?' star':'')+'"><div class="t"><b>'+esc(i[0])+'</b><div class="d">'+esc(i[1])+'</div><span class="a">'+esc(i[2])+'</span></div><div class="acts">'+(i[3]?'<a class="w" href="'+esc(i[3])+'" target="_blank" rel="noopener">Website</a>':'')+(i[2]!=='Online'?'<a class="m" href="'+map+'" target="_blank" rel="noopener">Map</a>':'')+'</div></div>';
-  }
-  function render(){
-    chips.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.dataset.c===cat);});
-    var v=q.toLowerCase(), html='';
-    D.forEach(function(c){
-      if(cat!=='all'&&c.id!==cat) return;
-      var its=c.items.filter(function(i){return !v||(i.join(' ')+' '+c.name).toLowerCase().indexOf(v)>-1;});
-      if(its.length) html+='<section class="cat"><h2>'+c.icon+' '+esc(c.name)+' <small>'+its.length+'</small></h2>'+its.map(item).join('')+'</section>';
-    });
-    list.innerHTML=html||'<p class="empty">No matches. Try another word.</p>';
-  }
-  chips.onclick=function(e){var b=e.target.closest('button'); if(!b) return; cat=b.dataset.c; render();};
-  document.getElementById('q').oninput=function(e){q=e.target.value.trim(); render();};
-  render();
+var D=window.MYSG_DIR, MTM='https://movetomalaysia.com/';
+var $=function(s){return document.querySelector(s);};
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+var C={}; D.forEach(function(c){C[c.id]=c;});
+var ALL=[]; D.forEach(function(c){c.items.forEach(function(i){ALL.push({c:c,i:i});});});
+var BG=['#E6E8F7','#FDE7E9','#FEF3D6','#EDE3FB'];
+var AUD={all:['schools','property','health','transport'],family:['schools','health','property','shopping'],retire:['gov','health','money','property'],business:['gov','property','money','telco']};
+var aud='all';
+var saved=[]; try{saved=JSON.parse(localStorage.getItem('mysg-saved')||'[]');}catch(e){}
+function isSaved(n){return saved.indexOf(n)>-1;}
+function toggleSave(n){ if(isSaved(n)) saved=saved.filter(function(x){return x!==n;}); else saved.push(n); try{localStorage.setItem('mysg-saved',JSON.stringify(saved));}catch(e){} }
+function count(c){return c.items.length+' '+(c.items.length===1?'listing':'listings');}
+function item(x){
+  var i=x.i, q=encodeURIComponent(i[0]+' '+(i[2]==='Nationwide'||i[2]==='Online'?'Johor':i[2]));
+  return '<div class="item'+(i[0]==='Move to Malaysia'?' star':'')+'"><div class="t"><b>'+esc(i[0])+'</b><div class="d">'+esc(i[1])+'</div><span class="a">'+esc(i[2])+'</span></div><div class="acts">'
+   +(i[3]?'<a class="w" href="'+esc(i[3])+'" target="_blank" rel="noopener">Website</a>':'')
+   +(i[2]!=='Online'?'<a class="m" href="https://www.google.com/maps/search/?api=1&query='+q+'" target="_blank" rel="noopener">Map</a>':'')
+   +'<button class="s" data-save="'+esc(i[0])+'" aria-label="Save">'+(isSaved(i[0])?'❤️':'🤍')+'</button></div></div>';
+}
+function bar(title){
+  if(!title){ $('#bar').innerHTML='<a class="logo" href="#home" aria-label="MYSG home">MY<b>SG</b></a><div class="seg">'+[['all','All'],['family','Family'],['retire','Retire'],['business','Business']].map(function(a){return '<button data-aud="'+a[0]+'" class="'+(aud===a[0]?'on':'')+'">'+a[1]+'</button>';}).join('')+'</div>'; return; }
+  $('#bar').innerHTML='<button class="back" id="back" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button><div class="ttl">'+esc(title)+'</div><a class="logo" href="#home" style="font-size:1.2rem">MY<b>SG</b></a>';
+  $('#back').onclick=function(){ if(history.length>1) history.back(); else location.hash='home'; };
+}
+var P={};
+P.home=function(){
+  var big=AUD[aud].map(function(id){return C[id];});
+  var rest=D.filter(function(c){return AUD[aud].indexOf(c.id)<0;}).slice(0,7);
+  return '<h1 class="hl">Moving to Johor, <span>made simple.</span></h1>'
+  +'<label class="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search '+ALL.length+' companies or services…" autocomplete="off"><div class="sres" id="sres" hidden></div></label>'
+  +'<div class="shd"><h2>Popular</h2><div><a href="#areas">By area</a><a href="#all">All services</a></div></div>'
+  +'<div class="big">'+big.map(function(c,k){return '<a class="bigt" href="#c-'+c.id+'"><span class="ic" style="background:'+BG[k]+'">'+c.icon+'</span><span><b>'+esc(c.name)+'</b><small>'+count(c)+'</small></span></a>';}).join('')+'</div>'
+  +'<div class="icons">'+rest.map(function(c){return '<a href="#c-'+c.id+'"><span>'+c.icon+'</span>'+esc(c.short||c.name)+'</a>';}).join('')+'<a href="#all"><span>▦</span>More</a></div>'
+  +'<a class="promo" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Need help with your move?</div><h3>Visit Move to Malaysia</h3><span class="chip">🌏 movetomalaysia.com</span></a>';
+};
+P.all=function(){ return '<div class="list">'+D.map(function(c){return '<a class="row" href="#c-'+c.id+'"><span>'+c.icon+'</span>'+esc(c.name)+'<small>'+c.items.length+'</small></a>';}).join('')+'</div>'; };
+P.areas=function(){
+  var m={}; ALL.forEach(function(x){m[x.i[2]]=(m[x.i[2]]||0)+1;});
+  return '<div class="list">'+Object.keys(m).sort(function(a,b){return m[b]-m[a];}).map(function(a){return '<a class="row" href="#a-'+encodeURIComponent(a)+'"><span>📍</span>'+esc(a)+'<small>'+m[a]+'</small></a>';}).join('')+'</div><p class="note">Every listing also has a Map button that opens Google Maps.</p>';
+};
+P.saved=function(){ var s=ALL.filter(function(x){return isSaved(x.i[0]);}); return s.length?s.map(item).join(''):'<p class="empty">Nothing saved yet. Tap 🤍 on any listing to keep it here.</p>'; };
+P.more=function(){ return '<a class="promo" style="margin:4px 0 14px" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Relocation support</div><h3>Visit movetomalaysia.com</h3></a><div class="list"><a class="row" href="#all"><span>▦</span>All services<small>'+D.length+'</small></a><a class="row" href="#areas"><span>📍</span>Browse by area</a><a class="row" href="#saved"><span>❤️</span>Saved</a></div><p class="note">MYSG lists real companies and services to help you move to and settle in Johor. Listings are for information only and are not endorsements. Details change, so check with each company directly.</p>'; };
+var TITLES={all:'All services',areas:'Browse by area',saved:'Saved',more:'More'};
+function render(){
+  var r=(location.hash||'#home').slice(1)||'home', html, title=null, s=$('#screen');
+  if(r.indexOf('c-')===0&&C[r.slice(2)]){ var c=C[r.slice(2)]; title=c.icon+' '+c.name; html=c.items.map(function(i){return item({c:c,i:i});}).join(''); }
+  else if(r.indexOf('a-')===0){ var a=decodeURIComponent(r.slice(2)); title='📍 '+a; html=ALL.filter(function(x){return x.i[2]===a;}).map(item).join('')||'<p class="empty">No listings here.</p>'; }
+  else if(P[r]&&r!=='home'){ title=TITLES[r]; html=P[r](); }
+  else { r='home'; html=P.home(); }
+  bar(title); s.innerHTML=html; s.classList.toggle('fit',r==='home'); s.scrollTop=0;
+  var tk=r==='home'?'home':(r==='areas'||r.indexOf('a-')===0)?'areas':r==='saved'?'saved':r==='more'?'more':'';
+  document.querySelectorAll('#tabbar a').forEach(function(x){x.classList.toggle('on',x.dataset.t===tk);});
+  if(r==='home') bindHome();
+}
+function bindHome(){
+  document.querySelectorAll('[data-aud]').forEach(function(b){b.onclick=function(){aud=b.dataset.aud; render();};});
+  var q=$('#q'), box=$('#sres');
+  q.oninput=function(){ var v=q.value.trim().toLowerCase(); if(!v){box.hidden=true;return;}
+    var hits=ALL.filter(function(x){return (x.i.join(' ')+' '+x.c.name).toLowerCase().indexOf(v)>-1;}).slice(0,10);
+    box.hidden=false; box.innerHTML=hits.length?hits.map(function(x){return '<a href="#c-'+x.c.id+'"><span>'+x.c.icon+'</span><span>'+esc(x.i[0])+'<small>'+esc(x.c.name)+' · '+esc(x.i[2])+'</small></span></a>';}).join(''):'<a href="'+MTM+'" target="_blank" rel="noopener"><span>🌏</span><span>No match. Ask Move to Malaysia<small>movetomalaysia.com</small></span></a>'; };
+}
+document.addEventListener('click',function(e){ var b=e.target.closest('[data-save]'); if(!b) return; toggleSave(b.dataset.save); b.textContent=isSaved(b.dataset.save)?'❤️':'🤍'; if(location.hash==='#saved') render(); });
+addEventListener('hashchange',render); render();
 })();
 </script>
 <script>
