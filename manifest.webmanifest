@@ -1,8 +1,8 @@
 {
   "name": "MYSG",
   "short_name": "MYSG",
-  "description": "Your trusted relocation partner for moving from Singapore to Johor, Malaysia.",
-  "start_url": "./#home",
+  "description": "Moving from Singapore to Johor, Malaysia.",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
