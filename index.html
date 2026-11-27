@@ -29,7 +29,7 @@ a{color:inherit}
 .seg button{border:0;background:none;font:700 .82rem Nunito,sans-serif;color:var(--muted);padding:7px 11px;border-radius:999px;cursor:pointer}
 .seg button.on{background:var(--primary);color:#fff}
 .back{border:0;background:#fff;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;cursor:pointer;color:var(--primary);box-shadow:0 2px 8px rgba(15,34,48,.06)}
-.ttl{font-weight:800;font-size:1.15rem;color:var(--primary);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ttl{font-weight:800;font-size:1.1rem;line-height:1.2;color:var(--primary);flex:1;min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .screen{flex:1;min-height:0;overflow-y:auto;padding:0 18px calc(var(--tab) + 18px + env(safe-area-inset-bottom))}
 .screen.fit{overflow:hidden;display:flex;flex-direction:column}
 h1.hl{color:var(--primary);font-size:clamp(1.35rem,3.6vh,1.75rem);line-height:1.15;margin:clamp(4px,1vh,10px) 0 clamp(8px,1.6vh,14px)}
@@ -51,17 +51,17 @@ h1.hl span{color:var(--accent)}
 .icons{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(6px,1.4vh,14px) 4px;margin-top:clamp(10px,2vh,18px)}
 .icons a{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;font:600 .78rem Nunito,sans-serif;text-align:center;line-height:1.15}
 .icons span{width:clamp(42px,6.2vh,52px);height:clamp(42px,6.2vh,52px);border-radius:15px;background:#fff;display:grid;place-items:center;font-size:clamp(19px,2.8vh,23px);box-shadow:0 2px 8px rgba(15,34,48,.05)}
-.promo{margin-top:auto;display:block;border-radius:20px;padding:clamp(12px,2vh,16px) 16px;color:#fff;text-decoration:none;background:linear-gradient(135deg,#010066 0%,#1A2A9C 60%,#EF3340 150%);position:relative}
-.promo .k{font:800 .82rem Nunito,sans-serif;color:#FFD6DA}
+/* Every banner (Move to Malaysia, Advertise on MYSG, future ads) uses the same MYSG navy-to-red gradient; advertiser logos sit on a white pill */
+.promo{margin-top:auto;display:block;border-radius:20px;padding:clamp(12px,2vh,16px) 16px;color:#fff;text-decoration:none;background:linear-gradient(135deg,#010066 0%,#EF3340 100%);position:relative}
+.promo .k{font:800 .82rem Nunito,sans-serif;color:rgba(255,255,255,.85)}
 .promo h3{margin:3px 0 0;font-size:clamp(1rem,2.4vh,1.15rem);color:#fff}
 .promo .tag{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.18);border-radius:8px;padding:3px 9px;font:700 .75rem Nunito,sans-serif}
 .promo .chip{display:inline-block;margin-top:8px;background:rgba(255,255,255,.18);border-radius:8px;padding:3px 10px;font:700 .78rem Nunito,sans-serif}
 .promos{margin-top:auto;display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;border-radius:20px}
 .promos::-webkit-scrollbar{display:none}
-.mtmlogo{display:inline-flex;align-items:center;background:#fff;border-radius:10px;padding:3px 8px;margin-top:6px}
-.mtmlogo img{height:clamp(30px,4.6vh,38px);width:auto;display:block}
+.logopill{display:inline-flex;align-items:center;background:#fff;border-radius:10px;padding:3px 8px;margin-top:6px}
+.logopill img{display:block;height:clamp(26px,4vh,34px);width:auto}
 .promos .promo{flex:0 0 100%;scroll-snap-align:center;margin-top:0}
-.promo.ad{background:linear-gradient(135deg,#010066 0%,#14206e 100%)}
 .pdots{display:flex;justify-content:center;gap:5px;margin-top:6px}
 .pdots i{width:6px;height:6px;border-radius:9px;background:#d0d5dd;transition:width .2s}
 .pdots i.on{width:16px;background:#010066}
@@ -70,7 +70,7 @@ h1.hl span{color:var(--accent)}
 .item b{display:block}
 .item .d{color:var(--muted);font-size:.88rem;margin:2px 0 6px}
 .item .a{font-size:.75rem;font-weight:700;color:var(--primary);background:#eef0fa;border-radius:6px;padding:2px 7px}
-.item.star{box-shadow:0 0 0 2px #FDBBC1}
+.item.star{box-shadow:0 0 0 2px rgba(239,51,64,.35)}
 .acts{display:flex;flex-direction:column;gap:6px;align-items:stretch}
 .acts a,.acts button{font:700 .78rem Nunito,sans-serif;text-decoration:none;border-radius:9px;padding:6px 10px;text-align:center;white-space:nowrap;border:0;cursor:pointer}
 .acts .w{background:var(--accent);color:#fff}
@@ -120,7 +120,8 @@ var aud='all';
 var saved=[]; try{saved=JSON.parse(localStorage.getItem('mysg-saved')||'[]');}catch(e){}
 function isSaved(n){return saved.indexOf(n)>-1;}
 function toggleSave(n){ if(isSaved(n)) saved=saved.filter(function(x){return x!==n;}); else saved.push(n); try{localStorage.setItem('mysg-saved',JSON.stringify(saved));}catch(e){} }
-function count(c){return c.items.length+' '+(c.items.length===1?'listing':'listings');}
+function plural(n){return n+' '+(n===1?'listing':'listings');}
+function count(c){return plural(c.items.length);}
 function item(x){
   var i=x.i, q=encodeURIComponent(i[0]+' '+(i[2]==='Nationwide'||i[2]==='Online'?'Johor':i[2]));
   return '<div class="item'+(i[0]==='Move to Malaysia'?' star':'')+'"><div class="t"><b>'+esc(i[0])+'</b><div class="d">'+esc(i[1])+'</div><span class="a">'+esc(i[2])+'</span></div><div class="acts">'
@@ -143,18 +144,18 @@ P.home=function(){
   +'<div class="big">'+big.map(function(c,k){return '<a class="bigt" href="#c-'+c.id+'"><span class="ic" style="background:'+BG[k]+'">'+c.icon+'</span><span><b>'+esc(c.name)+'</b><small>'+count(c)+'</small></span></a>';}).join('')+'</div>'
   +'<div class="icons">'+rest.map(function(c){return '<a href="#c-'+c.id+'"><span>'+c.icon+'</span>'+esc(c.short||c.name)+'</a>';}).join('')+'<a href="#all"><span>▦</span>More</a></div>'
   +'<div class="promos" id="promos">'
-  +'<a class="promo" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Need help with your move?</div><span class="mtmlogo"><img src="icons/mtm-logo.png" alt="Move to Malaysia"></span><span class="chip">🌏 movetomalaysia.com</span></a>'
+  +'<a class="promo" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Need help with your move?</div><span class="logopill"><img src="icons/mtm-logo.png" alt="Move to Malaysia"></span><span class="chip">movetomalaysia.com</span></a>'
   /* Advertise slide: no link, price or contact yet. When ready, turn this div into <a href="CONTACT LINK"> and add the price inside it. */
-  +'<div class="promo ad"><span class="tag">Ad space</span><div class="k">Advertise on MYSG</div><h3>Put your business in front of people moving to JB</h3><span class="chip">Featured listing</span></div>'
+  +'<div class="promo"><span class="tag">Ad Space</span><div class="k">Advertise on MYSG</div><h3>Put your business in front of people moving to JB</h3><span class="chip">Featured Listing</span></div>'
   +'</div><div class="pdots" id="pdots"><i class="on"></i><i></i></div>';
 };
-P.all=function(){ return '<div class="list">'+D.map(function(c){return '<a class="row" href="#c-'+c.id+'"><span>'+c.icon+'</span>'+esc(c.name)+'<small>'+c.items.length+'</small></a>';}).join('')+'</div>'; };
+P.all=function(){ return '<div class="list">'+D.map(function(c){return '<a class="row" href="#c-'+c.id+'"><span>'+c.icon+'</span>'+esc(c.name)+'<small>'+count(c)+'</small></a>';}).join('')+'</div>'; };
 P.areas=function(){
   var m={}; ALL.forEach(function(x){m[x.i[2]]=(m[x.i[2]]||0)+1;});
-  return '<div class="list">'+Object.keys(m).sort(function(a,b){return m[b]-m[a];}).map(function(a){return '<a class="row" href="#a-'+encodeURIComponent(a)+'"><span>📍</span>'+esc(a)+'<small>'+m[a]+'</small></a>';}).join('')+'</div><p class="note">Every listing also has a Map button that opens Google Maps.</p>';
+  return '<div class="list">'+Object.keys(m).sort(function(a,b){return m[b]-m[a];}).map(function(a){return '<a class="row" href="#a-'+encodeURIComponent(a)+'"><span>📍</span>'+esc(a)+'<small>'+plural(m[a])+'</small></a>';}).join('')+'</div><p class="note">Every listing also has a Map button that opens Google Maps.</p>';
 };
 P.saved=function(){ var s=ALL.filter(function(x){return isSaved(x.i[0]);}); return s.length?s.map(item).join(''):'<p class="empty">Nothing saved yet. Tap 🤍 on any listing to keep it here.</p>'; };
-P.more=function(){ return '<a class="promo" style="margin:4px 0 14px" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Relocation support</div><h3>Visit movetomalaysia.com</h3></a><div class="list"><a class="row" href="#all"><span>▦</span>All Services<small>'+D.length+'</small></a><a class="row" href="#areas"><span>📍</span>Browse by Area</a><a class="row" href="#saved"><span>❤️</span>Saved</a></div><p class="note">MYSG lists real companies and services to help you move to and settle in Johor. Listings are for information only and are not endorsements. Details change, so check with each company directly.</p>'; };
+P.more=function(){ return '<a class="promo" style="margin:4px 0 14px" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Need help with your move?</div><span class="logopill"><img src="icons/mtm-logo.png" alt="Move to Malaysia"></span><span class="chip">movetomalaysia.com</span></a><div class="list"><a class="row" href="#all"><span>▦</span>All Services<small>'+plural(ALL.length)+'</small></a><a class="row" href="#areas"><span>📍</span>Browse by Area</a><a class="row" href="#saved"><span>❤️</span>Saved</a></div><p class="note">MYSG lists real companies and services to help you move to and settle in Johor. Listings are for information only and are not endorsements. Details change, so check with each company directly.</p>'; };
 var TITLES={all:'All Services',areas:'Browse by Area',saved:'Saved',more:'More'};
 function render(){
   var r=(location.hash||'#home').slice(1)||'home', html, title=null, s=$('#screen');
