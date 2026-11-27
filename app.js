@@ -25,12 +25,12 @@ const TITLES = {about:'About us',services:'Services','svc-essentials':'Webinar (
 const TOP = ['home','guides','services','blog','more'];
 function appbar(r){
   const bar=$('#appbar');
-  if(r==='home'){ bar.className='appbar'; bar.innerHTML=`<a class="logo" href="#home" aria-label="MYSG home"><b>MY</b>SG</a><div class="seg" role="tablist">${[['all','All'],['families','Family'],['retirees','Retire'],['business','Business']].map(([k,l])=>`<button data-aud="${k}" class="${aud===k?'on':''}">${l}</button>`).join('')}</div>`;
+  if(r==='home'){ bar.className='appbar'; bar.innerHTML=`<a class="logo" href="#home" aria-label="MYSG home">MY<b>SG</b></a><div class="seg" role="tablist">${[['all','All'],['families','Family'],['retirees','Retire'],['business','Business']].map(([k,l])=>`<button data-aud="${k}" class="${aud===k?'on':''}">${l}</button>`).join('')}</div>`;
     bar.querySelectorAll('[data-aud]').forEach(x=>x.onclick=()=>{ aud=x.dataset.aud; render(); }); return; }
   const g = M.guides && M.guides[r], title = g ? g.title.split(':')[0].replace(' Guide','') : r.startsWith('blog-') ? 'Article' : (TITLES[r]||'MYSG');
   const top = TOP.includes(r);
   bar.className='appbar inner';
-  bar.innerHTML = `${top?'':`<button class="back" id="backbtn" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>`}<div class="ttl">${title}</div><a class="logo" href="#home" style="font-size:1.1rem" aria-label="MYSG home"><b>MY</b>SG</a>`;
+  bar.innerHTML = `${top?'':`<button class="back" id="backbtn" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>`}<div class="ttl">${title}</div><a class="logo" href="#home" style="font-size:1.1rem" aria-label="MYSG home">MY<b>SG</b></a>`;
   const bb=$('#backbtn'); if(bb) bb.onclick=()=>{ if(history.length>1) history.back(); else location.hash='home'; };
 }
 function buildFooter(){
@@ -95,9 +95,7 @@ P.home = () => `
  <a class="promo red" href="#svc-essentials"><span class="tag">Free</span><div class="k">Johor Move Essentials</div><h3>60-minute webinar on planning your move</h3><span class="chipw">🎥 Live online · Q&amp;A</span></a>
  <a class="promo" href="#svc-experience"><span class="tag">From SGD 299</span><div class="k">Johor Move eXperience</div><h3>See homes, schools and daily life in person</h3><span class="chipw">📍 Johor Bahru</span></a>
  <a class="promo dark" href="#summit-2027"><span class="tag">2027</span><div class="k">Johor Move Summit</div><h3>Register your interest for next year</h3><span class="chipw">🎤 Dates to be announced</span></a>
-</div><div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>
-<div class="shd"><h2>Latest articles</h2><a href="#blog">See all</a></div>
-<div class="list">${M.articles.filter(a=>!a.soon&&a.slug&&(aud==='all'||a.cat===aud)).slice(0,4).map(a=>`<a href="#blog-${a.id}"><span class="i">${{families:'👨‍👩‍👧',retirees:'🏖️',business:'💼'}[a.cat]}</span><span>${a.title}<br><small class="muted" style="font-weight:500">${a.date}</small></span></a>`).join('')}</div>`;
+</div><div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>`;
 function bindHome(root){
   const q=$('#q',root), box=$('#sres',root), idx=SEARCH();
   q.oninput=()=>{ const v=q.value.trim().toLowerCase(); if(!v){ box.hidden=true; return; }
@@ -106,13 +104,10 @@ function bindHome(root){
   const pr=$('#promos',root), dots=root.querySelectorAll('#dots i');
   pr.onscroll=()=>{ const i=Math.round(pr.scrollLeft/pr.clientWidth); dots.forEach((d,k)=>d.classList.toggle('on',k===i)); };
 }
-P.more = () => `<div style="height:14px"></div>
-<div class="list">${[['about','ℹ️','About us'],['testimonials','⭐','Testimonials'],['media','📰','In the media'],['contact','✉️','Contact us'],['summit-2026','📅','Johor Move Summit 2026'],['summit-2027','🎤','Johor Move Summit 2027']].map(([r,i,l])=>`<a href="#${r}"><span class="i">${i}</span>${l}</a>`).join('')}</div>
-<div class="shd"><h2>Get in touch</h2></div>
-<div class="list"><a href="https://wa.me/${WA_SG}" target="_blank" rel="noopener"><span class="i">💬</span>WhatsApp +65 9788 3460</a><a href="https://wa.me/60149853460" target="_blank" rel="noopener"><span class="i">💬</span>WhatsApp +60 14 985 3460</a><a href="mailto:${EMAIL}"><span class="i">✉️</span>${EMAIL}</a></div>
-<div class="shd"><h2>Follow</h2></div>
-<div class="list"><a href="https://www.instagram.com/moveto.malaysia" target="_blank" rel="noopener"><span class="i">📸</span>Instagram</a><a href="https://www.facebook.com/movetomalaysia" target="_blank" rel="noopener"><span class="i">👍</span>Facebook</a><a href="https://www.linkedin.com/company/movetomalaysia" target="_blank" rel="noopener"><span class="i">💼</span>LinkedIn</a></div>
-<p class="legal">By using this app, you agree to the <a href="https://movetomalaysia.com/terms" target="_blank" rel="noopener">Terms of Service</a>, <a href="https://movetomalaysia.com/disclaimer" target="_blank" rel="noopener">Disclaimer</a> and <a href="https://movetomalaysia.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>.<br>MoveToMalaysia.com · © 2026 8M Advisory Pte Ltd</p>`;
+P.more = () => `<div class="hhead"><h1 style="margin-bottom:12px">More</h1></div>
+<div class="list">${[['about','ℹ️','About us'],['testimonials','⭐','Testimonials'],['media','📰','In the media'],['contact','✉️','Contact us'],['summit-2027','🎤','Johor Move Summit 2027']].map(([r,i,l])=>`<a href="#${r}"><span class="i">${i}</span>${l}</a>`).join('')}</div>
+<div class="icons" style="grid-template-columns:repeat(5,1fr)">${[['https://wa.me/'+WA_SG,'💬','WhatsApp SG'],['https://wa.me/60149853460','💬','WhatsApp MY'],['mailto:'+EMAIL,'✉️','Email'],['https://www.instagram.com/moveto.malaysia','📸','Instagram'],['https://www.facebook.com/movetomalaysia','👍','Facebook']].map(([u,i,l])=>`<a href="${u}" target="_blank" rel="noopener"><span>${i}</span>${l}</a>`).join('')}</div>
+<p class="legal">By using this app, you agree to the <a href="https://movetomalaysia.com/terms" target="_blank" rel="noopener">Terms</a>, <a href="https://movetomalaysia.com/disclaimer" target="_blank" rel="noopener">Disclaimer</a> and <a href="https://movetomalaysia.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>.<br>MoveToMalaysia.com · © 2026 8M Advisory Pte Ltd</p>`;
 
 const TEAM = [
  ['Syafiqah Rahman',['Syafiqah Rahman is a passionate advocate for families seeking a fresh start across the Causeway. A mum to a lively primary school-going child, she knows the joys and challenges of relocating with children. In 2023, she and her family made the bold decision to sell their BTO flat in Singapore and begin a new chapter in Johor. That experience gave her invaluable, practical insights into everything from securing the right home to choosing the right school.','Balancing her role as a licensed real estate agent with a corporate career in the fast-moving quick commerce industry, Syafiqah combines professional expertise with lived experience. Her deep knowledge of Johor\'s property landscape, paired with her perspective as a working mum navigating a major move, enables her to guide families with both clarity and empathy.']],
@@ -321,8 +316,8 @@ function bindSummit(root){
 }
 
 /* App home for guides */
-P.guides = () => `<section class="mg-hero"><div class="wrap"><span class="badge" style="margin-bottom:12px">Master Guide</span><h1>Guides & Tools</h1><p>Everything you need to plan a move to Johor, with calculators and quizzes built in.</p></div></section>
-${sec(`<div class="tiles">${[['mg-visa','🛂','Visa & Immigration','Find your visa'],['mg-schools','🎓','International Schools','Compare schools'],['mg-property','🏠','Property & Housing','Match an area'],['mg-commuting','🚗','Commuting to SG','Cost & time'],['mg-cost-of-living','💰','Cost of Living','Build a basket'],['mg-car','🚙','Private Transport','Car & road tax'],['mg-js-sez','🏢','JS-SEZ','Business zone']].map(([r,i,t,s])=>`<a class="tile" href="#${r}"><span>${i}</span>${t}<small>${s}</small></a>`).join('')}</div>`)}`;
+P.guides = () => `<div class="hhead"><h1 style="margin-bottom:6px">Guides <span>& tools</span></h1><p class="muted small" style="margin:0 0 10px">Calculators and quizzes for planning your move.</p></div>
+<div class="big fitgrid">${[['mg-visa','🛂','Visa & passes','Find your visa'],['mg-schools','🎓','Schools','Compare 22'],['mg-property','🏠','Property','Match an area'],['mg-commuting','🚗','Commute to SG','Cost & time'],['mg-cost-of-living','💰','Cost of living','Build a basket'],['mg-car','🚙','Cars','Price & road tax'],['mg-js-sez','🏢','JS-SEZ','Business zone'],['blog','📝','Articles','13 guides']].map(([r,i,t,s],k)=>`<a class="bigt" href="#${r}"><span class="ic" style="background:${k%2?'#FDE7E9':'#E6E8F7'}">${i}</span><span><b>${t}</b><small>${s}</small></span></a>`).join('')}</div>`;
 
 /* ---------- router ---------- */
 M.P = P;
@@ -336,6 +331,7 @@ function render(){
   if(html == null){ r='home'; html = P.home(); }
   app.innerHTML = html;
   app.dataset.route = r;
+  app.classList.toggle('fit', ['home','guides','more'].includes(r));
   appbar(r);
   const tk = r.startsWith('mg-')||r==='guides' ? 'guides' : r.startsWith('svc')||r==='services' ? 'services' : r.startsWith('blog') ? 'blog' : r==='home' ? 'home' : 'more';
   document.querySelectorAll('#tabbar [data-t]').forEach(x => x.classList.toggle('on', x.dataset.t===tk));
