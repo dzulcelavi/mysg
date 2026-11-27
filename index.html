@@ -79,6 +79,15 @@ h1.hl span{color:var(--accent)}
 .list a.row{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:13px 14px;margin-bottom:8px;text-decoration:none;font-weight:700}
 .list .row small{margin-left:auto;color:var(--muted);font-weight:600}
 .empty{color:var(--muted);text-align:center;padding:40px 10px}
+/* Map tab: fills the screen between header and tab bar, never scrolls */
+.screen.mapv{overflow:hidden;display:flex;flex-direction:column;gap:8px}
+.mchips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex:0 0 auto;padding:2px 0}
+.mchips::-webkit-scrollbar{display:none}
+.mchips button{flex:0 0 auto;border:0;background:#fff;border-radius:999px;padding:7px 12px;font:700 .8rem Nunito,sans-serif;color:var(--ink);white-space:nowrap;cursor:pointer;box-shadow:0 2px 8px rgba(15,34,48,.05)}
+.mchips button.on{background:var(--primary);color:#fff}
+.mapbox{flex:1;min-height:0;position:relative;border-radius:18px;overflow:hidden;background:#e6e8ef;box-shadow:0 2px 10px rgba(15,34,48,.06)}
+.mapbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.gmo{position:absolute;right:10px;bottom:10px;background:var(--primary);color:#fff;font:700 .8rem Nunito,sans-serif;padding:8px 12px;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(15,34,48,.25)}
 .note{color:var(--muted);font-size:.82rem;margin:18px 4px}
 .tabbar{position:absolute;left:0;right:0;bottom:0;height:calc(var(--tab) + env(safe-area-inset-bottom));padding:6px 10px env(safe-area-inset-bottom);background:#fff;border-radius:22px 22px 0 0;display:flex;box-shadow:0 -4px 20px rgba(15,34,48,.06)}
 .tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;font:700 .74rem Nunito,sans-serif;color:var(--muted);border-radius:16px}
@@ -100,7 +109,7 @@ h1.hl span{color:var(--accent)}
   <main class="screen" id="screen"></main>
   <nav class="tabbar" id="tabbar">
     <a href="#home" data-t="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
-    <a href="#areas" data-t="areas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg>Map</a>
+    <a href="#map" data-t="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg>Map</a>
     <a href="#saved" data-t="saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>Saved</a>
     <a href="#more" data-t="more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>More</a>
   </nav>
@@ -120,13 +129,14 @@ var aud='all';
 var saved=[]; try{saved=JSON.parse(localStorage.getItem('mysg-saved')||'[]');}catch(e){}
 function isSaved(n){return saved.indexOf(n)>-1;}
 function toggleSave(n){ if(isSaved(n)) saved=saved.filter(function(x){return x!==n;}); else saved.push(n); try{localStorage.setItem('mysg-saved',JSON.stringify(saved));}catch(e){} }
+function findListings(v){ var lv=v.toLowerCase(); return ALL.filter(function(x){return (x.i.join(' ')+' '+x.c.name).toLowerCase().indexOf(lv)>-1;}); }
 function plural(n){return n+' '+(n===1?'listing':'listings');}
 function count(c){return plural(c.items.length);}
 function item(x){
-  var i=x.i, q=encodeURIComponent(i[0]+' '+(i[2]==='Nationwide'||i[2]==='Online'?'Johor':i[2]));
+  var i=x.i;
   return '<div class="item'+(i[0]==='Move to Malaysia'?' star':'')+'"><div class="t"><b>'+esc(i[0])+'</b><div class="d">'+esc(i[1])+'</div><span class="a">'+esc(i[2])+'</span></div><div class="acts">'
    +(i[3]?'<a class="w" href="'+esc(i[3])+'" target="_blank" rel="noopener">Website</a>':'')
-   +(i[2]!=='Online'?'<a class="m" href="https://www.google.com/maps/search/?api=1&query='+q+'" target="_blank" rel="noopener">Map</a>':'')
+   +(i[2]!=='Online'?'<a class="m" href="#map/'+encodeURIComponent(lq(i))+'">Map</a>':'')
    +'<button class="s" data-save="'+esc(i[0])+'" aria-label="Save">'+(isSaved(i[0])?'❤️':'🤍')+'</button></div></div>';
 }
 function bar(title){
@@ -134,13 +144,19 @@ function bar(title){
   $('#bar').innerHTML='<button class="back" id="back" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button><div class="ttl">'+esc(title)+'</div><a class="logo" href="#home" style="font-size:1.2rem">MY<b>SG</b></a>';
   $('#back').onclick=function(){ if(history.length>1) history.back(); else location.hash='home'; };
 }
+/* Map query for a listing, and for each category chip */
+function lq(i){ var a=i[2]; if(a==='Nationwide'||a==='Online') return i[0]+', Johor Bahru'; if(a==='Singapore'||a==='Kuala Lumpur') return i[0]+', '+a; return i[0]+', '+a+', Johor'; }
+var CATQ={relocation:'Move to Malaysia, Johor Bahru',gov:'Immigration office Johor Bahru',property:'Real estate agency Johor Bahru',schools:'International schools Johor Bahru',health:'Hospitals Johor Bahru',money:'Banks Johor Bahru',telco:'Mobile phone shops Johor Bahru',utilities:'TNB office Johor Bahru',transport:'RTS Link Bukit Chagar Johor Bahru',shopping:'Shopping malls Johor Bahru',movers:'Movers Johor Bahru',insurance:'Insurance companies Johor Bahru'};
+var MAPQ='Johor Bahru, Johor';
+function embUrl(q){return 'https://maps.google.com/maps?q='+encodeURIComponent(q)+'&z=13&output=embed';}
+function gmUrl(q){return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);}
 var P={};
 P.home=function(){
   var big=AUD[aud].map(function(id){return C[id];});
   var rest=D.filter(function(c){return AUD[aud].indexOf(c.id)<0;}).slice(0,7);
   return '<h1 class="hl">To JB, <span>so easy.</span></h1>'
   +'<label class="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search '+ALL.length+' companies or services…" autocomplete="off"><div class="sres" id="sres" hidden></div></label>'
-  +'<div class="shd"><h2>Popular</h2><div><a href="#areas">By Area</a><a href="#all">All Services</a></div></div>'
+  +'<div class="shd"><h2>Popular</h2><div><a href="#areas-list">By Area</a><a href="#all">All Services</a></div></div>'
   +'<div class="big">'+big.map(function(c,k){return '<a class="bigt" href="#c-'+c.id+'"><span class="ic" style="background:'+BG[k]+'">'+c.icon+'</span><span><b>'+esc(c.name)+'</b><small>'+count(c)+'</small></span></a>';}).join('')+'</div>'
   +'<div class="icons">'+rest.map(function(c){return '<a href="#c-'+c.id+'"><span>'+c.icon+'</span>'+esc(c.short||c.name)+'</a>';}).join('')+'<a href="#all"><span>▦</span>More</a></div>'
   +'<div class="promos" id="promos">'
@@ -150,23 +166,28 @@ P.home=function(){
   +'</div><div class="pdots" id="pdots"><i class="on"></i><i></i></div>';
 };
 P.all=function(){ return '<div class="list">'+D.map(function(c){return '<a class="row" href="#c-'+c.id+'"><span>'+c.icon+'</span>'+esc(c.name)+'<small>'+count(c)+'</small></a>';}).join('')+'</div>'; };
-P.areas=function(){
+P['areas-list']=function(){
   var m={}; ALL.forEach(function(x){m[x.i[2]]=(m[x.i[2]]||0)+1;});
-  return '<div class="list">'+Object.keys(m).sort(function(a,b){return m[b]-m[a];}).map(function(a){return '<a class="row" href="#a-'+encodeURIComponent(a)+'"><span>📍</span>'+esc(a)+'<small>'+plural(m[a])+'</small></a>';}).join('')+'</div><p class="note">Every listing also has a Map button that opens Google Maps.</p>';
+  return '<div class="list">'+Object.keys(m).sort(function(a,b){return m[b]-m[a];}).map(function(a){return '<a class="row" href="#a-'+encodeURIComponent(a)+'"><span>📍</span>'+esc(a)+'<small>'+plural(m[a])+'</small></a>';}).join('')+'</div><p class="note">Every listing also has a Map button that shows it on the map.</p>';
 };
+P.map=function(){ return '<label class="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="mq" type="search" placeholder="Search places or MYSG listings…" autocomplete="off"><div class="sres" id="msres" hidden></div></label>'
+  +'<div class="mchips" id="mchips">'+D.map(function(c){return '<button data-mc="'+c.id+'">'+esc(c.short||c.name)+'</button>';}).join('')+'</div>'
+  +'<div class="mapbox"><iframe id="mframe" title="Map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><a class="gmo" id="gmo" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>'; };
 P.saved=function(){ var s=ALL.filter(function(x){return isSaved(x.i[0]);}); return s.length?s.map(item).join(''):'<p class="empty">Nothing saved yet. Tap 🤍 on any listing to keep it here.</p>'; };
-P.more=function(){ return '<a class="promo" style="margin:4px 0 14px" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Need help with your move?</div><span class="logopill"><img src="icons/mtm-logo.png" alt="Move to Malaysia"></span><span class="chip">movetomalaysia.com</span></a><div class="list"><a class="row" href="#all"><span>▦</span>All Services<small>'+plural(ALL.length)+'</small></a><a class="row" href="#areas"><span>📍</span>Browse by Area</a><a class="row" href="#saved"><span>❤️</span>Saved</a></div><p class="note">MYSG lists real companies and services to help you move to and settle in Johor. Listings are for information only and are not endorsements. Details change, so check with each company directly.</p>'; };
-var TITLES={all:'All Services',areas:'Browse by Area',saved:'Saved',more:'More'};
+P.more=function(){ return '<a class="promo" style="margin:4px 0 14px" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Need help with your move?</div><span class="logopill"><img src="icons/mtm-logo.png" alt="Move to Malaysia"></span><span class="chip">movetomalaysia.com</span></a><div class="list"><a class="row" href="#all"><span>▦</span>All Services<small>'+plural(ALL.length)+'</small></a><a class="row" href="#areas-list"><span>📍</span>Browse by Area</a><a class="row" href="#saved"><span>❤️</span>Saved</a></div><p class="note">MYSG lists real companies and services to help you move to and settle in Johor. Listings are for information only and are not endorsements. Details change, so check with each company directly.</p>'; };
+var TITLES={all:'All Services','areas-list':'Browse by Area',map:'Map',saved:'Saved',more:'More'};
 function render(){
   var r=(location.hash||'#home').slice(1)||'home', html, title=null, s=$('#screen');
   if(r.indexOf('c-')===0&&C[r.slice(2)]){ var c=C[r.slice(2)]; title=c.icon+' '+c.name; html=c.items.map(function(i){return item({c:c,i:i});}).join(''); }
   else if(r.indexOf('a-')===0){ var a=decodeURIComponent(r.slice(2)); title='📍 '+a; html=ALL.filter(function(x){return x.i[2]===a;}).map(item).join('')||'<p class="empty">No listings here.</p>'; }
+  else if(r==='map'||r==='areas'||r.indexOf('map/')===0){ if(r.indexOf('map/')===0) MAPQ=decodeURIComponent(r.slice(4)); r='map'; title=TITLES.map; html=P.map(); }
   else if(P[r]&&r!=='home'){ title=TITLES[r]; html=P[r](); }
   else { r='home'; html=P.home(); }
-  bar(title); s.innerHTML=html; s.classList.toggle('fit',r==='home'); s.scrollTop=0;
-  var tk=r==='home'?'home':(r==='areas'||r.indexOf('a-')===0)?'areas':r==='saved'?'saved':r==='more'?'more':'';
+  bar(title); s.innerHTML=html; s.classList.toggle('fit',r==='home'); s.classList.toggle('mapv',r==='map'); s.scrollTop=0;
+  var tk=r==='home'?'home':r==='map'?'map':r==='saved'?'saved':r==='more'?'more':'';
   document.querySelectorAll('#tabbar a').forEach(function(x){x.classList.toggle('on',x.dataset.t===tk);});
   if(r==='home') bindHome();
+  if(r==='map') bindMap();
 }
 function bindHome(){
   document.querySelectorAll('[data-aud]').forEach(function(b){b.onclick=function(){aud=b.dataset.aud; render();};});
@@ -174,6 +195,20 @@ function bindHome(){
   q.oninput=function(){ var v=q.value.trim().toLowerCase(); if(!v){box.hidden=true;return;}
     var hits=ALL.filter(function(x){return (x.i.join(' ')+' '+x.c.name).toLowerCase().indexOf(v)>-1;}).slice(0,10);
     box.hidden=false; box.innerHTML=hits.length?hits.map(function(x){return '<a href="#c-'+x.c.id+'"><span>'+x.c.icon+'</span><span>'+esc(x.i[0])+'<small>'+esc(x.c.name)+' · '+esc(x.i[2])+'</small></span></a>';}).join(''):'<a href="'+MTM+'" target="_blank" rel="noopener"><span>🌏</span><span>No match. Ask Move to Malaysia<small>movetomalaysia.com</small></span></a>'; };
+}
+function setMap(q,keepUrl){ MAPQ=q; $('#mframe').src=embUrl(q); $('#gmo').href=gmUrl(q); if(!keepUrl) history.replaceState(null,'','#map/'+encodeURIComponent(q)); }
+function bindMap(){
+  var q=$('#mq'), box=$('#msres');
+  setMap(MAPQ,true);
+  function clearChips(){ document.querySelectorAll('#mchips button').forEach(function(b){b.classList.remove('on');}); }
+  function go(v){ box.hidden=true; q.blur(); clearChips(); setMap(v); }
+  q.oninput=function(){ var v=q.value.trim(); if(!v){box.hidden=true;return;}
+    var hits=findListings(v).filter(function(x){return x.i[2]!=='Online';}).slice(0,6);
+    box.hidden=false; box.innerHTML=hits.map(function(x){return '<a href="#" data-mq="'+esc(lq(x.i))+'"><span>'+x.c.icon+'</span><span>'+esc(x.i[0])+'<small>'+esc(x.c.short||x.c.name)+' · '+esc(x.i[2])+'</small></span></a>';}).join('')
+      +'<a href="#" data-mq="'+esc(v)+'"><span>🔎</span><span>Search the map for “'+esc(v)+'”</span></a>'; };
+  q.onkeydown=function(e){ if(e.key==='Enter'&&q.value.trim()){ e.preventDefault(); go(q.value.trim()); } };
+  box.onclick=function(e){ var a=e.target.closest('[data-mq]'); if(!a) return; e.preventDefault(); go(a.dataset.mq); };
+  $('#mchips').onclick=function(e){ var b=e.target.closest('[data-mc]'); if(!b) return; document.querySelectorAll('#mchips button').forEach(function(x){x.classList.toggle('on',x===b);}); q.value=''; box.hidden=true; setMap(CATQ[b.dataset.mc]||(C[b.dataset.mc].name+' Johor Bahru')); };
 }
 document.addEventListener('click',function(e){ var b=e.target.closest('[data-save]'); if(!b) return; toggleSave(b.dataset.save); b.textContent=isSaved(b.dataset.save)?'❤️':'🤍'; if(location.hash==='#saved') render(); });
 addEventListener('hashchange',render); render();
