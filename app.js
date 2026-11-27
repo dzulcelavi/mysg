@@ -20,16 +20,18 @@ const GUIDES = [
   ['mg-visa','Visa & Immigration'],['mg-schools','International Schools'],['mg-property','Property and Housing'],
   ['mg-commuting','Commuting into Singapore'],['mg-cost-of-living','Cost of Living'],['mg-car','Private Transport'],['mg-js-sez','JS-SEZ']];
 const NAV = [['home','Home'],['about','About'],['services','Services'],['MG','Master Guide'],['testimonials','Testimonials'],['blog','Blog'],['media','Media'],['contact','Contact']];
-function buildNav(){
-  $('#navlinks').innerHTML = NAV.map(([r,l]) => r==='MG'
-    ? `<div class="dd" id="dd"><button type="button" id="ddbtn" aria-expanded="false">Master Guide ▾</button><div class="ddmenu">${GUIDES.map(([g,n])=>`<a href="#${g}">${n}</a>`).join('')}</div></div>`
-    : `<a href="#${r}" data-r="${r}">${l}</a>`).join('');
-  $('#mnav').innerHTML = NAV.map(([r,l]) => r==='MG'
-    ? `<div class="lbl">Master Guide</div><div class="sub">${GUIDES.map(([g,n])=>`<a href="#${g}">${n}</a>`).join('')}</div>`
-    : `<a href="#${r}">${l}</a>`).join('');
-  $('#ddbtn').onclick = e => { e.stopPropagation(); const d=$('#dd'); d.classList.toggle('open'); $('#ddbtn').setAttribute('aria-expanded', d.classList.contains('open')); };
-  document.addEventListener('click', () => $('#dd') && $('#dd').classList.remove('open'));
-  $('#burger').onclick = () => { const m=$('#mnav'); m.classList.toggle('open'); $('#burger').setAttribute('aria-expanded', m.classList.contains('open')); };
+function buildNav(){}
+const TITLES = {about:'About us',services:'Services','svc-essentials':'Webinar (JME)','svc-experience':'Tours (JMX)','svc-concierge':'Concierge (JMC)',testimonials:'Testimonials',blog:'Blog',media:'In the media',contact:'Contact',more:'More',guides:'Guides & tools','summit-2026':'Summit 2026','summit-2027':'Summit 2027'};
+const TOP = ['home','guides','services','blog','more'];
+function appbar(r){
+  const bar=$('#appbar');
+  if(r==='home'){ bar.className='appbar'; bar.innerHTML=`<a class="logo" href="#home" aria-label="MYSG home"><b>MY</b>SG</a><div class="seg" role="tablist">${[['all','All'],['families','Family'],['retirees','Retire'],['business','Business']].map(([k,l])=>`<button data-aud="${k}" class="${aud===k?'on':''}">${l}</button>`).join('')}</div>`;
+    bar.querySelectorAll('[data-aud]').forEach(x=>x.onclick=()=>{ aud=x.dataset.aud; render(); }); return; }
+  const g = M.guides && M.guides[r], title = g ? g.title.split(':')[0].replace(' Guide','') : r.startsWith('blog-') ? 'Article' : (TITLES[r]||'MYSG');
+  const top = TOP.includes(r);
+  bar.className='appbar inner';
+  bar.innerHTML = `${top?'':`<button class="back" id="backbtn" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>`}<div class="ttl">${title}</div><a class="logo" href="#home" style="font-size:1.1rem" aria-label="MYSG home"><b>MY</b>SG</a>`;
+  const bb=$('#backbtn'); if(bb) bb.onclick=()=>{ if(history.length>1) history.back(); else location.hash='home'; };
 }
 function buildFooter(){
   const svg = {
@@ -71,33 +73,46 @@ function bindCopy(root, text){
 /* ---------- PAGES ---------- */
 const P = {};
 
+let aud='all';
+const SEARCH = () => [
+  ...(M.guides?Object.entries(M.guides).map(([r,g])=>[r,'📘',g.title,'Guide']):[]),
+  ['services','🧭','Our services','JME, JMX, JMC'],['svc-essentials','🎥','Johor Move Essentials (JME)','Free webinar'],['svc-experience','📍','Johor Move eXperience (JMX)','Tours from SGD 299'],['svc-concierge','👥','Johor Move Concierge (JMC)','From SGD 2,000'],
+  ['summit-2027','🎤','Johor Move Summit 2027','Register interest'],['about','ℹ️','About us','Team and story'],['testimonials','⭐','Testimonials','Client reviews'],['media','📰','In the media','Press coverage'],['contact','✉️','Contact','WhatsApp or email'],
+  ...M.articles.filter(a=>!a.soon&&a.slug).map(a=>['blog-'+a.id,'📝',a.title,'Article'])];
+const POP = {
+  all:[['mg-visa','🛂','#E6E8F7','Visa & passes','12 visa types'],['mg-property','🏠','#FDE7E9','Property & areas','15 areas'],['mg-schools','🎓','#E6E8F7','International schools','22 schools'],['mg-commuting','🚗','#FDE7E9','Commute to SG','Cost & time']],
+  families:[['mg-schools','🎓','#E6E8F7','International schools','22 schools'],['mg-property','🏠','#FDE7E9','Family areas','15 areas'],['blog-family-activities','🎡','#FDE7E9','Weekend activities','Family guide'],['blog-childcare-options','🧸','#E6E8F7','Childcare','Nurseries & kindy']],
+  retirees:[['blog-mm2h-program','🛂','#E6E8F7','MM2H guide','Long-stay visa'],['blog-healthcare-retirees','🏥','#E6E8F7','Healthcare','Hospitals & insurance'],['mg-cost-of-living','💰','#FDE7E9','Cost of living','Build a basket'],['blog-retirement-communities','🌴','#FDE7E9','Retirement living','Communities']],
+  business:[['mg-js-sez','🏢','#E6E8F7','JS-SEZ','Zones & incentives'],['blog-business-setup','📄','#FDE7E9','Company setup','Step by step'],['blog-tax-incentives','💼','#E6E8F7','Tax incentives','As low as 0–5%'],['blog-corporate-relocation','👔','#FDE7E9','Move your team','Corporate relocation']]};
 P.home = () => `
-<section class="hero"><div class="wrap">
-  <h1>Your New Life in <span>Johor</span> Starts Here</h1>
-  <p>Expert guidance for families, retirees, and business owners relocating to Malaysia's fastest-growing city.</p>
-  <div class="btns" style="margin-top:28px"><a class="btn" href="#services">Explore Our Services</a><a class="btn ghost-white" href="#contact">Get In Touch</a></div>
-</div></section>
-${sec(`<div class="center"><h2>Tailored Relocation Services</h2><p class="lead">From free webinars to personalised tours and end-to-end planning, we've got you covered.</p></div>
-<div class="grid g3" style="margin-top:32px">
- ${card(`<div class="chip">${I.video}</div><h3>Johor Move Essentials (JME)</h3><p>Join our comprehensive free webinar covering everything you need to know about moving to Johor.</p><a class="link-arrow" href="#svc-essentials">Sign Up Free →</a>`)}
- ${card(`<div class="chip">${I.pin}</div><h3>Johor Move eXperience (JMX)</h3><p>Experience Johor first-hand with our personalised tours showcasing neighbourhoods, schools, and amenities.</p><a class="link-arrow" href="#svc-experience">Book a Tour →</a>`)}
- ${card(`<div class="chip blue">${I.users}</div><h3>Johor Move Concierge (JMC)</h3><p>Your move planned end to end, with dedicated WhatsApp support while you carry it out.</p><a class="link-arrow" href="#svc-concierge">Explore Concierge →</a>`)}
-</div>`)}
-${sec(`<h2 class="center">Why Move to Johor?</h2>
-<div class="why" style="margin-top:32px">
- <div class="why-art" role="img" aria-label="Illustration of Johor Bahru skyline and the Causeway"><svg viewBox="0 0 400 320" preserveAspectRatio="xMidYMid slice"><circle cx="320" cy="70" r="38" fill="#ff5c5c" opacity=".85"/><path d="M0 230 L40 230 40 170 70 170 70 200 95 200 95 120 130 120 130 190 160 190 160 150 190 150 190 210 220 210 220 100 250 100 250 180 280 180 280 140 310 140 310 205 345 205 345 160 375 160 375 230 400 230 400 320 0 320Z" fill="#0b2353" opacity=".9"/><rect x="0" y="244" width="400" height="10" fill="#fff" opacity=".35"/><path d="M0 262 Q100 252 200 262 T400 262 V320 H0Z" fill="#1d4f9c" opacity=".7"/></svg></div>
- <div>
-  ${[['Quality of Life','Modern infrastructure, excellent healthcare, and world-class education opportunities.'],['Cost Effective','Lower cost of living with high quality amenities and services.'],['Strategic Location','Gateway to Southeast Asia with excellent connectivity to Singapore and beyond.'],['Expat-Friendly','Thriving international community with English widely spoken.']].map(([h,p])=>`<div class="why-item"><div class="chip red">★</div><div><h3>${h}</h3><p>${p}</p></div></div>`).join('')}
- </div>
-</div>
-<div class="center" style="margin-top:20px"><a class="btn" href="#about">Learn More About Us</a></div>`,'alt')}
-<section class="sec summit-band"><div class="wrap">
- <p class="eyebrow">Live Event · Singapore</p><h2>Johor Move Summit 2026</h2>
- <p class="lead" style="color:#dbe4f3">One focused day of expert guidance on property, schools, banking, immigration and lifestyle, three months before the RTS Link changes everything.</p>
- <div class="facts"><div>${I.cal} 31 October 2026</div><div>${I.pin} Aurelia @ Perennial Business City, Singapore</div><div>${I.ticket} Free general admission</div></div>
- <a class="btn" href="#summit-2026">Register Now</a><p class="small" style="margin-top:14px;opacity:.85">Limited seats. Register now to secure your spot.</p>
-</div></section>
-${cta('Ready to Make Your Move?','Join our free webinar to learn everything you need to know about moving to Johor.',`<a class="btn white" href="#svc-essentials">Join Free Webinar</a>`)}`;
+<div class="hhead"><h1>Moving to Johor, <span>made simple.</span></h1>
+ <label class="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search guides, services, articles…" aria-label="Search" autocomplete="off"></label>
+ <div class="sres" id="sres" hidden></div></div>
+<div class="shd"><h2>Popular</h2><div><a href="#guides">All guides</a></div></div>
+<div class="big">${POP[aud].map(([r,i,bg,t,s])=>`<a class="bigt" href="#${r}"><span class="ic" style="background:${bg}">${i}</span><span><b>${t}</b><small>${s}</small></span></a>`).join('')}</div>
+<div class="icons">${[['mg-cost-of-living','💰','Cost of living'],['mg-car','🚙','Cars & road tax'],['mg-js-sez','🏢','JS-SEZ'],['svc-essentials','🎥','Free webinar'],['svc-experience','📍','Book a tour'],['svc-concierge','👥','Concierge'],['summit-2027','🎤','Summit'],['more','▦','More']].map(([r,i,l])=>`<a href="#${r}"><span>${i}</span>${l}</a>`).join('')}</div>
+<div class="promos" id="promos">
+ <a class="promo red" href="#svc-essentials"><span class="tag">Free</span><div class="k">Johor Move Essentials</div><h3>60-minute webinar on planning your move</h3><span class="chipw">🎥 Live online · Q&amp;A</span></a>
+ <a class="promo" href="#svc-experience"><span class="tag">From SGD 299</span><div class="k">Johor Move eXperience</div><h3>See homes, schools and daily life in person</h3><span class="chipw">📍 Johor Bahru</span></a>
+ <a class="promo dark" href="#summit-2027"><span class="tag">2027</span><div class="k">Johor Move Summit</div><h3>Register your interest for next year</h3><span class="chipw">🎤 Dates to be announced</span></a>
+</div><div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>
+<div class="shd"><h2>Latest articles</h2><a href="#blog">See all</a></div>
+<div class="list">${M.articles.filter(a=>!a.soon&&a.slug&&(aud==='all'||a.cat===aud)).slice(0,4).map(a=>`<a href="#blog-${a.id}"><span class="i">${{families:'👨‍👩‍👧',retirees:'🏖️',business:'💼'}[a.cat]}</span><span>${a.title}<br><small class="muted" style="font-weight:500">${a.date}</small></span></a>`).join('')}</div>`;
+function bindHome(root){
+  const q=$('#q',root), box=$('#sres',root), idx=SEARCH();
+  q.oninput=()=>{ const v=q.value.trim().toLowerCase(); if(!v){ box.hidden=true; return; }
+    const hits=idx.filter(x=>(x[2]+' '+x[3]).toLowerCase().includes(v)).slice(0,8);
+    box.hidden=false; box.innerHTML = hits.length ? hits.map(([r,i,t,s])=>`<a href="#${r}"><span>${i}</span><span>${esc(t)}<small>${esc(s)}</small></span></a>`).join('') : '<a href="#contact"><span>💬</span><span>No match. Ask us instead<small>WhatsApp or email</small></span></a>'; };
+  const pr=$('#promos',root), dots=root.querySelectorAll('#dots i');
+  pr.onscroll=()=>{ const i=Math.round(pr.scrollLeft/pr.clientWidth); dots.forEach((d,k)=>d.classList.toggle('on',k===i)); };
+}
+P.more = () => `<div style="height:14px"></div>
+<div class="list">${[['about','ℹ️','About us'],['testimonials','⭐','Testimonials'],['media','📰','In the media'],['contact','✉️','Contact us'],['summit-2026','📅','Johor Move Summit 2026'],['summit-2027','🎤','Johor Move Summit 2027']].map(([r,i,l])=>`<a href="#${r}"><span class="i">${i}</span>${l}</a>`).join('')}</div>
+<div class="shd"><h2>Get in touch</h2></div>
+<div class="list"><a href="https://wa.me/${WA_SG}" target="_blank" rel="noopener"><span class="i">💬</span>WhatsApp +65 9788 3460</a><a href="https://wa.me/60149853460" target="_blank" rel="noopener"><span class="i">💬</span>WhatsApp +60 14 985 3460</a><a href="mailto:${EMAIL}"><span class="i">✉️</span>${EMAIL}</a></div>
+<div class="shd"><h2>Follow</h2></div>
+<div class="list"><a href="https://www.instagram.com/moveto.malaysia" target="_blank" rel="noopener"><span class="i">📸</span>Instagram</a><a href="https://www.facebook.com/movetomalaysia" target="_blank" rel="noopener"><span class="i">👍</span>Facebook</a><a href="https://www.linkedin.com/company/movetomalaysia" target="_blank" rel="noopener"><span class="i">💼</span>LinkedIn</a></div>
+<p class="legal">By using this app, you agree to the <a href="https://movetomalaysia.com/terms" target="_blank" rel="noopener">Terms of Service</a>, <a href="https://movetomalaysia.com/disclaimer" target="_blank" rel="noopener">Disclaimer</a> and <a href="https://movetomalaysia.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>.<br>MoveToMalaysia.com · © 2026 8M Advisory Pte Ltd</p>`;
 
 const TEAM = [
  ['Syafiqah Rahman',['Syafiqah Rahman is a passionate advocate for families seeking a fresh start across the Causeway. A mum to a lively primary school-going child, she knows the joys and challenges of relocating with children. In 2023, she and her family made the bold decision to sell their BTO flat in Singapore and begin a new chapter in Johor. That experience gave her invaluable, practical insights into everything from securing the right home to choosing the right school.','Balancing her role as a licensed real estate agent with a corporate career in the fast-moving quick commerce industry, Syafiqah combines professional expertise with lived experience. Her deep knowledge of Johor\'s property landscape, paired with her perspective as a working mum navigating a major move, enables her to guide families with both clarity and empathy.']],
@@ -321,22 +336,20 @@ function render(){
   if(html == null){ r='home'; html = P.home(); }
   app.innerHTML = html;
   app.dataset.route = r;
-  document.querySelectorAll('#navlinks a[data-r]').forEach(a => a.classList.toggle('on', a.dataset.r===r || (r.startsWith('blog')&&a.dataset.r==='blog') || (r.startsWith('svc')&&a.dataset.r==='services')));
+  appbar(r);
   const tk = r.startsWith('mg-')||r==='guides' ? 'guides' : r.startsWith('svc')||r==='services' ? 'services' : r.startsWith('blog') ? 'blog' : r==='home' ? 'home' : 'more';
   document.querySelectorAll('#tabbar [data-t]').forEach(x => x.classList.toggle('on', x.dataset.t===tk));
-  $('#mnav').classList.remove('open'); $('#burger').setAttribute('aria-expanded','false');
   const t = {home:'MYSG',about:'About',services:'Services',testimonials:'Testimonials',blog:'Blog',media:'Media',contact:'Contact'}[r];
   document.title = (t && r!=='home' ? t+' | ' : '') + 'MYSG';
   if(r==='blog') app.querySelectorAll('[data-bf]').forEach(b => b.onclick = () => { blogFilter=b.dataset.bf; render(); });
+  if(r==='home') bindHome(app);
   if(r==='contact') bindContact(app);
   if(r==='summit-2027') bindSummit(app);
   if(M.guides && M.guides[r]) M.guides[r].bind(app);
 }
 M.render = render;
-window.addEventListener('hashchange', () => { render(); window.scrollTo(0,0); });
+window.addEventListener('hashchange', () => { render(); $('#app').scrollTop=0; });
 buildNav(); buildFooter(); render();
-$('#moretab').onclick = e => { e.stopPropagation(); $('#mnav').classList.toggle('open'); };
-document.addEventListener('click', e => { if(!e.target.closest('#mnav') && !e.target.closest('#moretab')) $('#mnav').classList.remove('open'); });
 /* install prompt */
 (function(){
   const box=$('#install'), standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
