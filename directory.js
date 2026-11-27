@@ -87,4 +87,17 @@ window.MYSG_DIR = [
   ['Mid Valley Southkey','Shopping mall.','Johor Bahru',''],
   ['Johor Bahru City Square','Shopping mall next to the CIQ.','Johor Bahru',''],
  ]},
+ {id:'movers', short:'Movers', icon:'🚚', name:'Movers & relocation logistics', items:[
+  ['Allied Pickfords Malaysia','Household moving and packing, including Johor Bahru and Singapore moves.','Johor Bahru','https://www.allied.com/my/domestic-moving/johor-bahru-moving-services'],
+  ['TheLorry','Lorry booking and movers, including Singapore to Johor Bahru cross-border moves.','Nationwide','https://thelorry.com/my/'],
+  ['Asian Tigers','International moving and relocation services in Asia.','Nationwide','https://www.asiantigersgroup.com/'],
+  ['Seven Seas Worldwide','International shipping of boxes and household goods to Malaysia.','Online','https://www.sevenseasworldwide.com/en-sg/'],
+ ]},
+ {id:'insurance', short:'Insurance', icon:'🛡️', name:'Insurance', items:[
+  ['AIA Malaysia','Life, medical and health insurance.','Nationwide','https://www.aia.com.my/'],
+  ['Great Eastern (Malaysia)','Life, medical and general insurance.','Nationwide','https://www.greateasternlife.com/my/'],
+  ['Prudential Malaysia','Life, medical and investment-linked insurance.','Nationwide','https://www.prudential.com.my/'],
+  ['Allianz Malaysia','General and life insurance, including car and home.','Nationwide',''],
+  ['Etiqa','Car, travel, home, life and takaful insurance.','Nationwide','https://www.etiqa.com.my/'],
+ ]},
 ];
