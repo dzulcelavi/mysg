@@ -79,6 +79,32 @@ h1.hl span{color:var(--accent)}
 .list a.row{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:13px 14px;margin-bottom:8px;text-decoration:none;font-weight:700}
 .list .row small{margin-left:auto;color:var(--muted);font-weight:600}
 .empty{color:var(--muted);text-align:center;padding:40px 10px}
+/* Points chip, Rewards, Advertise plans */
+.hlrow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pts{display:inline-flex;align-items:center;gap:4px;background:#fff;color:var(--primary);border-radius:999px;padding:5px 10px;font:800 .8rem Nunito,sans-serif;text-decoration:none;box-shadow:0 2px 8px rgba(15,34,48,.06);white-space:nowrap;flex:0 0 auto}
+.pts i{font-style:normal;color:var(--accent)}
+.card{background:#fff;border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(15,34,48,.04)}
+.card h3{margin:0 0 8px;font-size:1rem}
+.ptotal{display:flex;align-items:baseline;gap:8px}
+.ptotal b{font-size:2.2rem;color:var(--primary);line-height:1}
+.ptotal span{color:var(--muted);font-weight:700}
+.lvl{display:flex;justify-content:space-between;font:700 .85rem Nunito,sans-serif;margin-top:10px}
+.lvl .nx{color:var(--muted)}
+.bar2{height:8px;background:var(--bg);border-radius:9px;overflow:hidden;margin-top:6px}
+.bar2 i{display:block;height:100%;background:linear-gradient(90deg,#010066,#EF3340);border-radius:9px}
+.rrow{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--bg);font-size:.88rem}
+.rrow:first-of-type{border-top:0}
+.rrow b{color:var(--primary);white-space:nowrap}
+.rrow .soon{font:700 .72rem Nunito,sans-serif;color:var(--accent);background:#FDE7E9;border-radius:6px;padding:3px 8px;white-space:nowrap}
+.plan .pr{font:800 .95rem Nunito,sans-serif;color:var(--primary);margin:8px 0}
+.plan .row2{display:flex;align-items:center;gap:8px}
+.paybtn{font:800 .88rem Nunito,sans-serif;border:0;border-radius:10px;padding:9px 16px;background:var(--accent);color:#fff;text-decoration:none;display:inline-block}
+.paybtn[aria-disabled=true]{background:#d0d5dd;color:#fff;pointer-events:none}
+.plan .soon{font:700 .72rem Nunito,sans-serif;color:var(--accent);background:#FDE7E9;border-radius:6px;padding:3px 8px}
+.toast{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(var(--tab) + 14px + env(safe-area-inset-bottom));background:var(--primary);color:#fff;font:800 .85rem Nunito,sans-serif;padding:8px 14px;border-radius:999px;box-shadow:0 6px 18px rgba(15,34,48,.25);z-index:12;opacity:0;transition:opacity .25s;pointer-events:none}
+.toast.show{opacity:1}
+.term{cursor:pointer}
+.term .rd{color:#16a34a;font-weight:800;margin-left:6px}
 .pchips{display:flex;flex-wrap:wrap;gap:6px;padding:8px 6px 6px}
 .pchips .lbl{width:100%;font:700 .75rem Nunito,sans-serif;color:var(--muted);padding:0 4px}
 .pchips button{border:0;background:var(--bg);border-radius:999px;padding:6px 11px;font:700 .8rem Nunito,sans-serif;color:var(--ink);cursor:pointer}
@@ -132,10 +158,12 @@ h1.hl span{color:var(--accent)}
     <a href="#saved" data-t="saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>Saved</a>
     <a href="#more" data-t="more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>More</a>
   </nav>
+  <div class="toast" id="toast"></div>
   <div class="install" id="install" role="dialog" aria-label="Install the app"><img src="icons/icon-192.png" alt=""><p id="installtxt"><strong>Install MYSG</strong><br>Add it to your home screen for one-tap access.</p><button id="installbtn">Install</button><button id="installx" aria-label="Dismiss">×</button></div>
 </div>
 <script src="directory.js"></script>
 <script src="terms.js"></script>
+<script src="pay.js"></script>
 <script>
 (function(){
 var D=window.MYSG_DIR, MTM='https://movetomalaysia.com/';
@@ -176,7 +204,7 @@ function item(x){
 }
 function bar(title){
   if(!title){ $('#bar').innerHTML='<a class="logo" href="#home" aria-label="MYSG home">MY<b>SG</b></a><div class="seg">'+[['all','All'],['family','Family'],['retire','Retire'],['business','Business']].map(function(a){return '<button data-aud="'+a[0]+'" class="'+(aud===a[0]?'on':'')+'">'+a[1]+'</button>';}).join('')+'</div>'; return; }
-  $('#bar').innerHTML='<button class="back" id="back" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button><div class="ttl">'+esc(title)+'</div><a class="logo" href="#home" style="font-size:1.2rem">MY<b>SG</b></a>';
+  $('#bar').innerHTML='<button class="back" id="back" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button><div class="ttl">'+esc(title)+'</div>'+ptsChip()+'<a class="logo" href="#home" style="font-size:1.2rem">MY<b>SG</b></a>';
   $('#back').onclick=function(){ if(history.length>1) history.back(); else location.hash='home'; };
 }
 /* Map query for a listing, and for each category chip */
@@ -185,19 +213,38 @@ var CATQ={relocation:'Move to Malaysia, Johor Bahru',gov:'Immigration office Joh
 var MAPQ='Johor Bahru, Johor';
 function embUrl(q){return 'https://maps.google.com/maps?q='+encodeURIComponent(q)+'&z=13&output=embed';}
 function gmUrl(q){return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);}
+/* ---------- Points & Rewards (saved on this device only, localStorage 'mysg-points') ---------- */
+var LEVELS=[[0,'Newcomer'],[50,'Settler'],[150,'Local'],[400,'JB Pro']];
+var PTS={total:0,log:[],once:{},day:{}};
+try{ var _p=JSON.parse(localStorage.getItem('mysg-points')||'null'); if(_p&&typeof _p.total==='number') PTS=_p; }catch(e){}
+PTS.once=PTS.once||{}; PTS.day=PTS.day||{}; PTS.log=PTS.log||[];
+function today(){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+function savePts(){ try{ localStorage.setItem('mysg-points',JSON.stringify(PTS)); }catch(e){} }
+function level(t){ var cur=LEVELS[0], nxt=null; LEVELS.forEach(function(l,k){ if(t>=l[0]){cur=l; nxt=LEVELS[k+1]||null;} }); return {name:cur[1], from:cur[0], next:nxt}; }
+function toast(m){ var t=$('#toast'); if(!t) return; t.textContent=m; t.classList.add('show'); clearTimeout(toast._h); toast._h=setTimeout(function(){t.classList.remove('show');},1600); }
+function award(pts,label,onceKey,capKey,cap){
+  if(onceKey){ if(PTS.once[onceKey]) return; PTS.once[onceKey]=1; }
+  if(capKey){ if(PTS.day.date!==today()) PTS.day={date:today()}; PTS.day[capKey]=(PTS.day[capKey]||0); if(PTS.day[capKey]>=cap) return; PTS.day[capKey]++; }
+  PTS.total+=pts; PTS.log.unshift({d:today(),l:label,p:pts}); PTS.log=PTS.log.slice(0,20); savePts();
+  var c=document.querySelectorAll('.pts b'); c.forEach(function(x){x.textContent=PTS.total;});
+  toast('+'+pts+' '+(pts===1?'point':'points')+' · '+label);
+}
+function ptsChip(){ return '<a class="pts" href="#rewards" aria-label="Points & Rewards"><i>★</i><b>'+PTS.total+'</b></a>'; }
+/* daily visit */
+(function(){ if(PTS.day.date!==today()){ PTS.day={date:today()}; savePts(); setTimeout(function(){ award(5,'Daily Visit','visit-'+today()); },800); } })();
 var P={};
 P.home=function(){
   var big=AUD[aud].map(function(id){return C[id];});
   var rest=D.filter(function(c){return AUD[aud].indexOf(c.id)<0;}).slice(0,7);
-  return '<h1 class="hl">To JB, <span>so easy.</span></h1>'
+  return '<div class="hlrow"><h1 class="hl">To JB, <span>so easy.</span></h1>'+ptsChip()+'</div>'
   +'<label class="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search '+ALL.length+' companies or services…" autocomplete="off"><div class="sres" id="sres" hidden></div></label>'
   +'<div class="shd"><h2>Popular</h2><div><a href="#areas-list">By Area</a><a href="#all">All Services</a></div></div>'
   +'<div class="big">'+big.map(function(c,k){return '<a class="bigt" href="#c-'+c.id+'"><span class="ic" style="background:'+BG[k]+'">'+c.icon+'</span><span><b>'+esc(c.name)+'</b><small>'+count(c)+'</small></span></a>';}).join('')+'</div>'
   +'<div class="icons">'+rest.map(function(c){return '<a href="#c-'+c.id+'"><span>'+c.icon+'</span>'+esc(c.short||c.name)+'</a>';}).join('')+'<a href="#all"><span>▦</span>More</a></div>'
   +'<div class="promos" id="promos">'
   +'<a class="promo" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Need help with your move?</div><span class="logopill"><img src="icons/mtm-logo.png" alt="Move to Malaysia"></span><span class="chip">movetomalaysia.com</span></a>'
-  /* Advertise slide: no link, price or contact yet. When ready, turn this div into <a href="CONTACT LINK"> and add the price inside it. */
-  +'<div class="promo"><span class="tag">Ad Space</span><div class="k">Advertise on MYSG</div><h3>Put your business in front of people moving to JB</h3><span class="chip">Featured Listing</span></div>'
+  /* Advertise slide opens the Advertise & Get Featured plans (prices and payment links live in pay.js) */
+  +'<a class="promo" href="#advertise"><span class="tag">Ad Space</span><div class="k">Advertise on MYSG</div><h3>Put your business in front of people moving to JB</h3><span class="chip">Featured Listing</span></a>'
   +'</div><div class="pdots" id="pdots"><i class="on"></i><i></i></div>';
 };
 P.all=function(){ return '<div class="list">'+D.map(function(c){return '<a class="row" href="#c-'+c.id+'"><span>'+c.icon+'</span>'+esc(c.name)+'<small>'+count(c)+'</small></a>';}).join('')+'</div>'; };
@@ -217,10 +264,25 @@ P.community=function(sub,term){
   }
   return top+'<label class="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="tq" type="search" placeholder="Search '+TERMS.length+' common terms…" autocomplete="off" value="'+esc(term||'')+'"></label></div><div id="tlist"></div>';
 };
-function termsHTML(v){ var list=v?findTerms(v):TERMS; return list.length?list.map(function(t){return '<div class="term"><div class="h"><b>'+esc(t[0])+'</b><span class="tag">'+esc(t[2])+'</span></div><div class="d">'+esc(t[1])+'</div></div>';}).join(''):'<p class="empty">No terms match. Try another word.</p>'; }
+function termsHTML(v){ var list=v?findTerms(v):TERMS; return list.length?list.map(function(t){return '<div class="term" data-term="'+esc(t[0])+'"><div class="h"><b>'+esc(t[0])+(PTS.once['term-'+t[0]]?'<span class="rd">✓</span>':'')+'</b><span class="tag">'+esc(t[2])+'</span></div><div class="d">'+esc(t[1])+'</div></div>';}).join(''):'<p class="empty">No terms match. Try another word.</p>'; }
+var PAYOK=/^https:\/\/([a-z0-9-]+\.)*(hit-pay\.com|hitpay\.com|hitpayapp\.com|hitpay\.app)\//i;
+P.advertise=function(){ var plans=window.MYSG_PLANS||[];
+  return '<p class="note" style="margin-top:4px">Reach families, retirees and businesses moving to JB. Pick a plan below.</p>'
+   +plans.map(function(pl){ var ok=PAYOK.test(pl.link||'');
+     return '<div class="card plan"><h3>'+esc(pl.name)+'</h3><div class="d" style="color:var(--muted);font-size:.88rem">'+esc(pl.desc)+'</div><div class="pr">'+(pl.price?esc(pl.price):'Price Coming Soon')+'</div><div class="row2">'
+      +(ok?'<a class="paybtn" href="'+esc(pl.link)+'" target="_blank" rel="noopener">Pay Now</a>':'<span class="paybtn" aria-disabled="true">Pay Now</span><span class="soon">Coming Soon</span>')+'</div></div>'; }).join('')
+   +'<p class="note">Secure payment by HitPay · PayNow, cards, GrabPay. Payments open on HitPay’s secure page; MYSG never sees your card details.</p>'; };
+P.rewards=function(){ var L=level(PTS.total), pct=L.next?Math.min(100,Math.round((PTS.total-L.from)/(L.next[0]-L.from)*100)):100;
+  var earn=[['Daily Visit','+5'],['Save a Listing','+2'],['Open a Website or Map','+1'],['Read a Common Term','+1'],['Join a WhatsApp Group','+10']];
+  var perks=['Partner Discounts','Free Moving Checklist','Priority Relocation Call','Member Badge'];
+  return '<div class="card"><div class="ptotal"><b>'+PTS.total+'</b><span>points</span></div><div class="lvl"><span>'+esc(L.name)+'</span><span class="nx">'+(L.next?(L.next[0]-PTS.total)+' to '+esc(L.next[1]):'Top Level')+'</span></div><div class="bar2"><i style="width:'+pct+'%"></i></div></div>'
+   +'<div class="card"><h3>How to Earn</h3>'+earn.map(function(e){return '<div class="rrow"><span>'+e[0]+'</span><b>'+e[1]+'</b></div>';}).join('')+'</div>'
+   +'<div class="card"><h3>Recent Activity</h3>'+(PTS.log.length?PTS.log.slice(0,10).map(function(e){return '<div class="rrow"><span>'+esc(e.l)+'</span><b>+'+e.p+'</b></div>';}).join(''):'<div class="rrow"><span style="color:var(--muted)">No points yet.</span></div>')+'</div>'
+   +'<div class="card"><h3>Rewards</h3>'+perks.map(function(r){return '<div class="rrow"><span>'+r+'</span><span class="soon">Coming Soon</span></div>';}).join('')+'</div>'
+   +'<p class="note">Points are saved on this device only. Clearing your browser data resets them.</p>'; };
 P.saved=function(){ var s=ALL.filter(function(x){return isSaved(x.i[0]);}); return s.length?s.map(item).join(''):'<p class="empty">Nothing saved yet. Tap 🤍 on any listing to keep it here.</p>'; };
-P.more=function(){ return '<a class="promo" style="margin:4px 0 14px" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Need help with your move?</div><span class="logopill"><img src="icons/mtm-logo.png" alt="Move to Malaysia"></span><span class="chip">movetomalaysia.com</span></a><div class="list"><a class="row" href="#all"><span>▦</span>All Services<small>'+plural(ALL.length)+'</small></a><a class="row" href="#areas-list"><span>📍</span>Browse by Area</a><a class="row" href="#saved"><span>❤️</span>Saved</a></div><p class="note">MYSG lists real companies and services to help you move to and settle in Johor. Listings are for information only and are not endorsements. Details change, so check with each company directly.</p>'; };
-var TITLES={all:'All Services','areas-list':'Browse by Area',map:'Map',community:'Community',saved:'Saved',more:'More'};
+P.more=function(){ return '<a class="promo" style="margin:4px 0 14px" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Need help with your move?</div><span class="logopill"><img src="icons/mtm-logo.png" alt="Move to Malaysia"></span><span class="chip">movetomalaysia.com</span></a><div class="list"><a class="row" href="#all"><span>▦</span>All Services<small>'+plural(ALL.length)+'</small></a><a class="row" href="#areas-list"><span>📍</span>Browse by Area</a><a class="row" href="#saved"><span>❤️</span>Saved</a><a class="row" href="#rewards"><span>⭐</span>Points & Rewards<small>'+PTS.total+' points</small></a><a class="row" href="#advertise"><span>📣</span>Advertise & Get Featured</a></div><p class="note">MYSG lists real companies and services to help you move to and settle in Johor. Listings are for information only and are not endorsements. Details change, so check with each company directly.</p>'; };
+var TITLES={all:'All Services','areas-list':'Browse by Area',map:'Map',community:'Community',saved:'Saved',more:'More',advertise:'Advertise & Get Featured',rewards:'Points & Rewards'};
 function render(){
   var r=(location.hash||'#home').slice(1)||'home', html, title=null, s=$('#screen');
   if(r.indexOf('c-')===0&&C[r.slice(2)]){ var c=C[r.slice(2)]; title=c.icon+' '+c.name; html=c.items.map(function(i){return item({c:c,i:i});}).join(''); }
@@ -266,7 +328,12 @@ function bindMap(){
   box.onclick=function(e){ var a=e.target.closest('[data-mq]'); if(!a) return; e.preventDefault(); go(a.dataset.mq); };
   $('#mchips').onclick=function(e){ var b=e.target.closest('[data-mc]'); if(!b) return; document.querySelectorAll('#mchips button').forEach(function(x){x.classList.toggle('on',x===b);}); q.value=''; box.hidden=true; setMap(CATQ[b.dataset.mc]||(C[b.dataset.mc].name+' Johor Bahru')); };
 }
-document.addEventListener('click',function(e){ var b=e.target.closest('[data-save]'); if(!b) return; toggleSave(b.dataset.save); b.textContent=isSaved(b.dataset.save)?'❤️':'🤍'; if(location.hash==='#saved') render(); });
+document.addEventListener('click',function(e){
+  var a=e.target.closest('.acts a.w, .acts a.m'); if(a){ award(1,a.classList.contains('w')?'Opened a Website':'Opened a Map',null,'open',10); return; }
+  var w=e.target.closest('.thr a.wa'); if(w){ award(10,'Joined a WhatsApp Group','wa-'+w.getAttribute('href')); return; }
+  var t=e.target.closest('[data-term]'); if(t){ var k='term-'+t.dataset.term; if(!PTS.once[k]){ award(1,'Read a Common Term',k); var b0=t.querySelector('b'); if(b0&&!b0.querySelector('.rd')) b0.insertAdjacentHTML('beforeend','<span class="rd">✓</span>'); } return; }
+});
+document.addEventListener('click',function(e){ var b=e.target.closest('[data-save]'); if(!b) return; if(!isSaved(b.dataset.save)) award(2,'Saved a Listing','save-'+b.dataset.save); toggleSave(b.dataset.save); b.textContent=isSaved(b.dataset.save)?'❤️':'🤍'; if(location.hash==='#saved') render(); });
 addEventListener('hashchange',render); render();
 })();
 document.addEventListener('scroll',function(e){ var p=e.target; if(!p||p.id!=='promos') return; var k=Math.round(p.scrollLeft/p.clientWidth); document.querySelectorAll('#pdots i').forEach(function(d,j){d.classList.toggle('on',j===k);}); },true);
