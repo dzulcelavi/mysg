@@ -2,9 +2,11 @@
 
 A web app version of [MoveToMalaysia.com](https://movetomalaysia.com): every page, the blog, and the seven Master Guide tools (visa, schools, property, commuting, cost of living, private transport, JS-SEZ), in the site's own layout and theme.
 
-## Run it
+## Use it
 
-Open `index.html` in a browser. There is no build step and nothing to install.
+Live at https://dzulcelavi.github.io/move-to-malaysia/
+
+On a phone, open that link and install it: on Android tap **Install** (or the browser menu, then *Add to Home screen*); on iPhone tap **Share**, then *Add to Home Screen*. It then opens full screen from its own icon and works offline.
 
 ## Files
 
@@ -13,6 +15,7 @@ Open `index.html` in a browser. There is no build step and nothing to install.
 - `guides.js`: Master Guide pages and calculators
 - `data-guides.js`: guide data (visas, schools, areas, commute costs, prices, cars, JS-SEZ)
 - `data-content.js`: blog articles and long-form guide content
+- `manifest.webmanifest`, `sw.js`, `icons/`: app install, offline support and icons
 
 ## Differences from the website
 

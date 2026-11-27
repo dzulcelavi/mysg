@@ -305,6 +305,10 @@ function bindSummit(root){
   root.querySelectorAll('[data-jump]').forEach(a => a.onclick = e => { e.preventDefault(); $('#'+a.dataset.jump).scrollIntoView({behavior:'smooth'}); });
 }
 
+/* App home for guides */
+P.guides = () => `<section class="mg-hero"><div class="wrap"><span class="badge" style="margin-bottom:12px">Master Guide</span><h1>Guides & Tools</h1><p>Everything you need to plan a move to Johor, with calculators and quizzes built in.</p></div></section>
+${sec(`<div class="tiles">${[['mg-visa','🛂','Visa & Immigration','Find your visa'],['mg-schools','🎓','International Schools','Compare schools'],['mg-property','🏠','Property & Housing','Match an area'],['mg-commuting','🚗','Commuting to SG','Cost & time'],['mg-cost-of-living','💰','Cost of Living','Build a basket'],['mg-car','🚙','Private Transport','Car & road tax'],['mg-js-sez','🏢','JS-SEZ','Business zone']].map(([r,i,t,s])=>`<a class="tile" href="#${r}"><span>${i}</span>${t}<small>${s}</small></a>`).join('')}</div>`)}`;
+
 /* ---------- router ---------- */
 M.P = P;
 function render(){
@@ -318,6 +322,8 @@ function render(){
   app.innerHTML = html;
   app.dataset.route = r;
   document.querySelectorAll('#navlinks a[data-r]').forEach(a => a.classList.toggle('on', a.dataset.r===r || (r.startsWith('blog')&&a.dataset.r==='blog') || (r.startsWith('svc')&&a.dataset.r==='services')));
+  const tk = r.startsWith('mg-')||r==='guides' ? 'guides' : r.startsWith('svc')||r==='services' ? 'services' : r.startsWith('blog') ? 'blog' : r==='home' ? 'home' : 'more';
+  document.querySelectorAll('#tabbar [data-t]').forEach(x => x.classList.toggle('on', x.dataset.t===tk));
   $('#mnav').classList.remove('open'); $('#burger').setAttribute('aria-expanded','false');
   const t = {home:'Move to Malaysia',about:'About',services:'Services',testimonials:'Testimonials',blog:'Blog',media:'Media',contact:'Contact'}[r];
   document.title = (t && r!=='home' ? t+' | ' : '') + 'Move to Malaysia';
@@ -329,4 +335,19 @@ function render(){
 M.render = render;
 window.addEventListener('hashchange', () => { render(); window.scrollTo(0,0); });
 buildNav(); buildFooter(); render();
+$('#moretab').onclick = e => { e.stopPropagation(); $('#mnav').classList.toggle('open'); };
+document.addEventListener('click', e => { if(!e.target.closest('#mnav') && !e.target.closest('#moretab')) $('#mnav').classList.remove('open'); });
+/* install prompt */
+(function(){
+  const box=$('#install'), standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  let seen=false; try{ seen = localStorage.getItem('mtm-install-x')==='1'; }catch(e){}
+  if(standalone || seen) return;
+  let deferred=null;
+  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred=e; box.classList.add('show'); });
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  if(ios){ $('#installtxt').innerHTML='<strong>Install Move to Malaysia</strong><br>Tap the Share button, then <b>Add to Home Screen</b>.'; $('#installbtn').style.display='none'; setTimeout(()=>box.classList.add('show'),1500); }
+  $('#installbtn').onclick = async () => { if(!deferred) return; deferred.prompt(); await deferred.userChoice; deferred=null; box.classList.remove('show'); };
+  $('#installx').onclick = () => { box.classList.remove('show'); try{ localStorage.setItem('mtm-install-x','1'); }catch(e){} };
+  window.addEventListener('appinstalled', () => box.classList.remove('show'));
+})();
 })();
