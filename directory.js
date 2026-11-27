@@ -4,9 +4,17 @@
 window.MYSG_DIR = [
  {id:'relocation', short:'Relocation', icon:'🧭', name:'Relocation Help', items:[
   ['Move to Malaysia','Relocation advice, webinars, house and school tours, and concierge for families and businesses moving from Singapore to Johor.','Johor Bahru','https://movetomalaysia.com/'],
+  ['Consulate-General of Singapore in Johor Bahru','Consulate of Singapore in JB: passports and help for Singaporeans in Johor.','Johor Bahru','https://jb.mfa.gov.sg/'],
+  ['High Commission of Singapore in Kuala Lumpur','Embassy-level mission of Singapore in Malaysia.','Kuala Lumpur','https://kl.mfa.gov.sg/'],
+  ['High Commission of Malaysia in Singapore','Mission of Malaysia in Singapore for Malaysian documents and visas.','Singapore','https://www.kln.gov.my/web/sgp_singapore/home'],
+  ['ICA Singapore','Singapore passports, citizenship and checkpoint services.','Online','https://www.ica.gov.sg/'],
+  ['MFA eRegister','Register with the Singapore foreign ministry when living in Malaysia.','Online','https://eregister.mfa.gov.sg/'],
+  ['TalentCorp Malaysia','Government agency for talent, including the Returning Expert Programme for Malaysians moving home.','Nationwide','https://www.talentcorp.com.my/'],
+  ['MIDA (Malaysian Investment Development Authority)','Government agency for businesses setting up or relocating to Malaysia.','Nationwide','https://www.mida.gov.my/'],
  ]},
  {id:'gov', short:'Visas & Gov', icon:'🏛️', name:'Visas & Gov', items:[
   ['Immigration Department of Malaysia','Visas, passes and immigration services.','Nationwide','https://www.imi.gov.my'],
+  ['Expatriate Services Division (ESD)','Employment passes and dependant passes for expatriates working in Malaysia.','Online','https://esd.imi.gov.my/portal/'],
   ['MM2H (Malaysia My Second Home)','Official long-stay visa programme.','Nationwide','https://www.mm2h.gov.my'],
   ['Iskandar Regional Development Authority (IRDA)','Agency for the Iskandar Malaysia region and Johor investment.','Iskandar Puteri','https://www.irda.com.my'],
   ['Johor State Government','Official state government portal.','Johor','https://www.johor.gov.my'],
