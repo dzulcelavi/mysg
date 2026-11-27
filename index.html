@@ -56,6 +56,13 @@ h1.hl span{color:var(--accent)}
 .promo h3{margin:3px 0 0;font-size:clamp(1rem,2.4vh,1.15rem);color:#fff}
 .promo .tag{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.18);border-radius:8px;padding:3px 9px;font:700 .75rem Nunito,sans-serif}
 .promo .chip{display:inline-block;margin-top:8px;background:rgba(255,255,255,.18);border-radius:8px;padding:3px 10px;font:700 .78rem Nunito,sans-serif}
+.promos{margin-top:auto;display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;border-radius:20px}
+.promos::-webkit-scrollbar{display:none}
+.promos .promo{flex:0 0 100%;scroll-snap-align:center;margin-top:0}
+.promo.ad{background:linear-gradient(135deg,#010066 0%,#14206e 100%)}
+.pdots{display:flex;justify-content:center;gap:5px;margin-top:6px}
+.pdots i{width:6px;height:6px;border-radius:9px;background:#d0d5dd;transition:width .2s}
+.pdots i.on{width:16px;background:#010066}
 .item{background:#fff;border-radius:16px;padding:12px 14px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 2px 8px rgba(15,34,48,.04)}
 .item .t{flex:1;min-width:0}
 .item b{display:block}
@@ -133,7 +140,11 @@ P.home=function(){
   +'<div class="shd"><h2>Popular</h2><div><a href="#areas">By area</a><a href="#all">All services</a></div></div>'
   +'<div class="big">'+big.map(function(c,k){return '<a class="bigt" href="#c-'+c.id+'"><span class="ic" style="background:'+BG[k]+'">'+c.icon+'</span><span><b>'+esc(c.name)+'</b><small>'+count(c)+'</small></span></a>';}).join('')+'</div>'
   +'<div class="icons">'+rest.map(function(c){return '<a href="#c-'+c.id+'"><span>'+c.icon+'</span>'+esc(c.short||c.name)+'</a>';}).join('')+'<a href="#all"><span>▦</span>More</a></div>'
-  +'<a class="promo" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Need help with your move?</div><h3>Visit Move to Malaysia</h3><span class="chip">🌏 movetomalaysia.com</span></a>';
+  +'<div class="promos" id="promos">'
+  +'<a class="promo" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Need help with your move?</div><h3>Visit Move to Malaysia</h3><span class="chip">🌏 movetomalaysia.com</span></a>'
+  /* Advertise slide: no link, price or contact yet. When ready, turn this div into <a href="CONTACT LINK"> and add the price inside it. */
+  +'<div class="promo ad"><span class="tag">Ad space</span><div class="k">Advertise on MYSG</div><h3>Put your business in front of people moving to JB</h3><span class="chip">Featured listing</span></div>'
+  +'</div><div class="pdots" id="pdots"><i class="on"></i><i></i></div>';
 };
 P.all=function(){ return '<div class="list">'+D.map(function(c){return '<a class="row" href="#c-'+c.id+'"><span>'+c.icon+'</span>'+esc(c.name)+'<small>'+c.items.length+'</small></a>';}).join('')+'</div>'; };
 P.areas=function(){
@@ -164,6 +175,7 @@ function bindHome(){
 document.addEventListener('click',function(e){ var b=e.target.closest('[data-save]'); if(!b) return; toggleSave(b.dataset.save); b.textContent=isSaved(b.dataset.save)?'❤️':'🤍'; if(location.hash==='#saved') render(); });
 addEventListener('hashchange',render); render();
 })();
+document.addEventListener('scroll',function(e){ var p=e.target; if(!p||p.id!=='promos') return; var k=Math.round(p.scrollLeft/p.clientWidth); document.querySelectorAll('#pdots i').forEach(function(d,j){d.classList.toggle('on',j===k);}); },true);
 </script>
 <script>
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
