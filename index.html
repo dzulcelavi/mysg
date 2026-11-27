@@ -79,6 +79,24 @@ h1.hl span{color:var(--accent)}
 .list a.row{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:13px 14px;margin-bottom:8px;text-decoration:none;font-weight:700}
 .list .row small{margin-left:auto;color:var(--muted);font-weight:600}
 .empty{color:var(--muted);text-align:center;padding:40px 10px}
+.pchips{display:flex;flex-wrap:wrap;gap:6px;padding:8px 6px 6px}
+.pchips .lbl{width:100%;font:700 .75rem Nunito,sans-serif;color:var(--muted);padding:0 4px}
+.pchips button{border:0;background:var(--bg);border-radius:999px;padding:6px 11px;font:700 .8rem Nunito,sans-serif;color:var(--ink);cursor:pointer}
+/* Community */
+.ctop{position:sticky;top:0;background:var(--bg);padding-bottom:10px;z-index:2}
+.cseg{display:flex;background:#fff;border-radius:999px;padding:4px;box-shadow:0 2px 10px rgba(15,34,48,.06);margin-bottom:10px}
+.cseg a{flex:1;text-align:center;text-decoration:none;font:700 .88rem Nunito,sans-serif;color:var(--muted);padding:8px 10px;border-radius:999px}
+.cseg a.on{background:var(--primary);color:#fff}
+.term{background:#fff;border-radius:14px;padding:11px 14px;margin-bottom:8px;box-shadow:0 2px 8px rgba(15,34,48,.04)}
+.term .h{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.term b{font-size:.98rem}
+.term .d{color:var(--muted);font-size:.88rem;margin-top:3px}
+.tag{font:700 .72rem Nunito,sans-serif;color:var(--primary);background:#eef0fa;border-radius:6px;padding:2px 7px;white-space:nowrap}
+.thr{background:#fff;border-radius:16px;padding:13px 14px;margin-bottom:9px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(15,34,48,.04)}
+.thr .t{flex:1;min-width:0}
+.thr .d{color:var(--muted);font-size:.86rem;margin-top:2px}
+.thr .soon{font:700 .72rem Nunito,sans-serif;color:var(--accent);background:#FDE7E9;border-radius:6px;padding:3px 8px;white-space:nowrap}
+.thr .wa{font:700 .78rem Nunito,sans-serif;background:var(--accent);color:#fff;border-radius:9px;padding:7px 10px;text-decoration:none;white-space:nowrap}
 /* Map tab: fills the screen between header and tab bar, never scrolls */
 .screen.mapv{overflow:hidden;display:flex;flex-direction:column;gap:8px}
 .mchips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex:0 0 auto;padding:2px 0}
@@ -90,7 +108,7 @@ h1.hl span{color:var(--accent)}
 .gmo{position:absolute;right:10px;bottom:10px;background:var(--primary);color:#fff;font:700 .8rem Nunito,sans-serif;padding:8px 12px;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(15,34,48,.25)}
 .note{color:var(--muted);font-size:.82rem;margin:18px 4px}
 .tabbar{position:absolute;left:0;right:0;bottom:0;height:calc(var(--tab) + env(safe-area-inset-bottom));padding:6px 10px env(safe-area-inset-bottom);background:#fff;border-radius:22px 22px 0 0;display:flex;box-shadow:0 -4px 20px rgba(15,34,48,.06)}
-.tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;font:700 .74rem Nunito,sans-serif;color:var(--muted);border-radius:16px}
+.tabbar a{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;font:700 .74rem Nunito,sans-serif;color:var(--muted);border-radius:16px}
 .tabbar a svg{width:22px;height:22px}
 .tabbar a.on{color:var(--primary);background:#E6E8F7}
 @media (max-height:720px){h1.hl{font-size:1.25rem;margin:2px 0 8px}.shd{margin:8px 0 6px}.bigt{padding:8px 10px}.icons{margin-top:8px;row-gap:6px}.icons a{font-size:.72rem;gap:4px}.promo{padding:10px 14px}.promo .chip{display:none}}
@@ -110,12 +128,14 @@ h1.hl span{color:var(--accent)}
   <nav class="tabbar" id="tabbar">
     <a href="#home" data-t="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
     <a href="#map" data-t="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg>Map</a>
+    <a href="#community" data-t="community"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20v-1a5 5 0 0 1 5-5h3a5 5 0 0 1 5 5v1"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14a5 5 0 0 1 3.5 4.8V20"/></svg>Community</a>
     <a href="#saved" data-t="saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>Saved</a>
     <a href="#more" data-t="more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>More</a>
   </nav>
   <div class="install" id="install" role="dialog" aria-label="Install the app"><img src="icons/icon-192.png" alt=""><p id="installtxt"><strong>Install MYSG</strong><br>Add it to your home screen for one-tap access.</p><button id="installbtn">Install</button><button id="installx" aria-label="Dismiss">×</button></div>
 </div>
 <script src="directory.js"></script>
+<script src="terms.js"></script>
 <script>
 (function(){
 var D=window.MYSG_DIR, MTM='https://movetomalaysia.com/';
@@ -129,7 +149,22 @@ var aud='all';
 var saved=[]; try{saved=JSON.parse(localStorage.getItem('mysg-saved')||'[]');}catch(e){}
 function isSaved(n){return saved.indexOf(n)>-1;}
 function toggleSave(n){ if(isSaved(n)) saved=saved.filter(function(x){return x!==n;}); else saved.push(n); try{localStorage.setItem('mysg-saved',JSON.stringify(saved));}catch(e){} }
-function findListings(v){ var lv=v.toLowerCase(); return ALL.filter(function(x){return (x.i.join(' ')+' '+x.c.name).toLowerCase().indexOf(lv)>-1;}); }
+/* Search that understands everyday words: case-insensitive, ignores punctuation, partial words,
+   and matches each category's everyday words (tags in directory.js) and the Common Terms (terms.js). */
+var TERMS=window.MYSG_TERMS||[], THREADS=window.MYSG_THREADS||[];
+var STOP=['to','in','the','a','an','of','for','near','at','my','i','me','and','or','is','where','how'];
+var POPULAR=['Clinic','Rent','SIM Card','Bank Account','Visa','Bus to SG'];
+function norm(t){return String(t).toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();}
+function words(v){ v=String(v).toLowerCase().replace(/a\s*&\s*e/g,'emergency'); return norm(v).split(' ').filter(function(w){return w.length>1&&STOP.indexOf(w)<0;}); }
+var CATTXT={}; D.forEach(function(c){ CATTXT[c.id]=norm(c.name+' '+(c.short||'')+' '+(c.tags||'')+' '+TERMS.filter(function(t){return t[3]===c.id;}).map(function(t){return t[0];}).join(' ')); });
+function hit(ws,txt){ return ws.length>0&&ws.every(function(w){return txt.indexOf(w)>-1;}); }
+function findListings(v){ var ws=words(v); if(!ws.length) return [];
+  var own=[], viaCat=[];
+  ALL.forEach(function(x){ var t=norm(x.i.join(' ')); if(hit(ws,t)) own.push(x); else if(hit(ws,t+' '+CATTXT[x.c.id])) viaCat.push(x); });
+  return own.concat(viaCat); }
+function findCats(v){ var ws=words(v); return D.filter(function(c){return hit(ws,CATTXT[c.id]);}); }
+function findTerms(v){ var ws=words(v); return TERMS.filter(function(t){return hit(ws,norm(t[0]+' '+t[1]));}); }
+function popularHTML(){ return '<div class="pchips"><span class="lbl">Popular Searches</span>'+POPULAR.map(function(p){return '<button data-pop="'+esc(p)+'">'+esc(p)+'</button>';}).join('')+'</div>'; }
 function plural(n){return n+' '+(n===1?'listing':'listings');}
 function count(c){return plural(c.items.length);}
 function item(x){
@@ -173,28 +208,46 @@ P['areas-list']=function(){
 P.map=function(){ return '<label class="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="mq" type="search" placeholder="Search places or MYSG listings…" autocomplete="off"><div class="sres" id="msres" hidden></div></label>'
   +'<div class="mchips" id="mchips">'+D.map(function(c){return '<button data-mc="'+c.id+'">'+esc(c.short||c.name)+'</button>';}).join('')+'</div>'
   +'<div class="mapbox"><iframe id="mframe" title="Map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><a class="gmo" id="gmo" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>'; };
+P.community=function(sub,term){
+  var top='<div class="ctop"><div class="cseg"><a href="#community" class="'+(sub!=='threads'?'on':'')+'">Common Terms</a><a href="#community/threads" class="'+(sub==='threads'?'on':'')+'">Threads</a></div>';
+  if(sub==='threads'){
+    return top+'</div>'+THREADS.map(function(t){ var ok=/^https:\/\/chat\.whatsapp\.com\//.test(t.link||'');
+      return '<div class="thr"><div class="t"><b>'+esc(t.name)+'</b><div class="d">'+esc(t.desc)+'</div></div>'+(ok?'<a class="wa" href="'+esc(t.link)+'" target="_blank" rel="noopener">Join on WhatsApp</a>':'<span class="soon">Coming Soon</span>')+'</div>'; }).join('')
+      +'<p class="note">Discussion groups on WhatsApp are coming soon.</p>';
+  }
+  return top+'<label class="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="tq" type="search" placeholder="Search '+TERMS.length+' common terms…" autocomplete="off" value="'+esc(term||'')+'"></label></div><div id="tlist"></div>';
+};
+function termsHTML(v){ var list=v?findTerms(v):TERMS; return list.length?list.map(function(t){return '<div class="term"><div class="h"><b>'+esc(t[0])+'</b><span class="tag">'+esc(t[2])+'</span></div><div class="d">'+esc(t[1])+'</div></div>';}).join(''):'<p class="empty">No terms match. Try another word.</p>'; }
 P.saved=function(){ var s=ALL.filter(function(x){return isSaved(x.i[0]);}); return s.length?s.map(item).join(''):'<p class="empty">Nothing saved yet. Tap 🤍 on any listing to keep it here.</p>'; };
 P.more=function(){ return '<a class="promo" style="margin:4px 0 14px" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Need help with your move?</div><span class="logopill"><img src="icons/mtm-logo.png" alt="Move to Malaysia"></span><span class="chip">movetomalaysia.com</span></a><div class="list"><a class="row" href="#all"><span>▦</span>All Services<small>'+plural(ALL.length)+'</small></a><a class="row" href="#areas-list"><span>📍</span>Browse by Area</a><a class="row" href="#saved"><span>❤️</span>Saved</a></div><p class="note">MYSG lists real companies and services to help you move to and settle in Johor. Listings are for information only and are not endorsements. Details change, so check with each company directly.</p>'; };
-var TITLES={all:'All Services','areas-list':'Browse by Area',map:'Map',saved:'Saved',more:'More'};
+var TITLES={all:'All Services','areas-list':'Browse by Area',map:'Map',community:'Community',saved:'Saved',more:'More'};
 function render(){
   var r=(location.hash||'#home').slice(1)||'home', html, title=null, s=$('#screen');
   if(r.indexOf('c-')===0&&C[r.slice(2)]){ var c=C[r.slice(2)]; title=c.icon+' '+c.name; html=c.items.map(function(i){return item({c:c,i:i});}).join(''); }
   else if(r.indexOf('a-')===0){ var a=decodeURIComponent(r.slice(2)); title='📍 '+a; html=ALL.filter(function(x){return x.i[2]===a;}).map(item).join('')||'<p class="empty">No listings here.</p>'; }
   else if(r==='map'||r==='areas'||r.indexOf('map/')===0){ if(r.indexOf('map/')===0) MAPQ=decodeURIComponent(r.slice(4)); r='map'; title=TITLES.map; html=P.map(); }
+  else if(r==='community'||r.indexOf('community/')===0){ var cs=r.split('/'); var csub=cs[1]==='threads'?'threads':'terms', cterm=cs[1]==='t'?decodeURIComponent(cs.slice(2).join('/')):''; r='community'; title=TITLES.community; html=P.community(csub,cterm); }
   else if(P[r]&&r!=='home'){ title=TITLES[r]; html=P[r](); }
   else { r='home'; html=P.home(); }
   bar(title); s.innerHTML=html; s.classList.toggle('fit',r==='home'); s.classList.toggle('mapv',r==='map'); s.scrollTop=0;
-  var tk=r==='home'?'home':r==='map'?'map':r==='saved'?'saved':r==='more'?'more':'';
+  var tk=r==='home'?'home':r==='map'?'map':r==='community'?'community':r==='saved'?'saved':r==='more'?'more':'';
   document.querySelectorAll('#tabbar a').forEach(function(x){x.classList.toggle('on',x.dataset.t===tk);});
   if(r==='home') bindHome();
   if(r==='map') bindMap();
+  if(r==='community'&&$('#tq')){ var tq=$('#tq'); $('#tlist').innerHTML=termsHTML(tq.value.trim()); tq.oninput=function(){ $('#tlist').innerHTML=termsHTML(tq.value.trim()); }; }
 }
 function bindHome(){
   document.querySelectorAll('[data-aud]').forEach(function(b){b.onclick=function(){aud=b.dataset.aud; render();};});
   var q=$('#q'), box=$('#sres');
-  q.oninput=function(){ var v=q.value.trim().toLowerCase(); if(!v){box.hidden=true;return;}
-    var hits=ALL.filter(function(x){return (x.i.join(' ')+' '+x.c.name).toLowerCase().indexOf(v)>-1;}).slice(0,10);
-    box.hidden=false; box.innerHTML=hits.length?hits.map(function(x){return '<a href="#c-'+x.c.id+'"><span>'+x.c.icon+'</span><span>'+esc(x.i[0])+'<small>'+esc(x.c.name)+' · '+esc(x.i[2])+'</small></span></a>';}).join(''):'<a href="'+MTM+'" target="_blank" rel="noopener"><span>🌏</span><span>No match. Ask Move to Malaysia<small>movetomalaysia.com</small></span></a>'; };
+  q.oninput=function(){ var v=q.value.trim(); if(!v){ box.hidden=false; box.innerHTML=popularHTML(); return; }
+    var cats=findCats(v).slice(0,2), terms=findTerms(v).slice(0,2), hits=findListings(v).slice(0,8);
+    var h=cats.map(function(c){return '<a href="#c-'+c.id+'"><span>'+c.icon+'</span><span><b>'+esc(c.name)+'</b><small>'+count(c)+'</small></span></a>';}).join('')
+      +terms.map(function(t){return '<a href="#community/t/'+encodeURIComponent(t[0])+'"><span>📖</span><span>'+esc(t[0])+'<small>'+esc(t[1])+'</small></span></a>';}).join('')
+      +hits.map(function(x){return '<a href="#c-'+x.c.id+'"><span>'+x.c.icon+'</span><span>'+esc(x.i[0])+'<small>'+esc(x.c.name)+' · '+esc(x.i[2])+'</small></span></a>';}).join('');
+    box.hidden=false; box.innerHTML=h||'<a href="'+MTM+'" target="_blank" rel="noopener"><span>🌏</span><span>No match. Ask Move to Malaysia<small>movetomalaysia.com</small></span></a>'; };
+  q.onfocus=function(){ if(!q.value.trim()){ box.hidden=false; box.innerHTML=popularHTML(); } };
+  q.onblur=function(){ setTimeout(function(){ if(document.activeElement!==q && !q.value.trim()) box.hidden=true; },200); };
+  box.onmousedown=function(e){ var b=e.target.closest('[data-pop]'); if(!b) return; e.preventDefault(); q.value=b.dataset.pop; q.oninput(); };
 }
 function setMap(q,keepUrl){ MAPQ=q; $('#mframe').src=embUrl(q); $('#gmo').href=gmUrl(q); if(!keepUrl) history.replaceState(null,'','#map/'+encodeURIComponent(q)); }
 function bindMap(){
@@ -202,9 +255,12 @@ function bindMap(){
   setMap(MAPQ,true);
   function clearChips(){ document.querySelectorAll('#mchips button').forEach(function(b){b.classList.remove('on');}); }
   function go(v){ box.hidden=true; q.blur(); clearChips(); setMap(v); }
-  q.oninput=function(){ var v=q.value.trim(); if(!v){box.hidden=true;return;}
-    var hits=findListings(v).filter(function(x){return x.i[2]!=='Online';}).slice(0,6);
-    box.hidden=false; box.innerHTML=hits.map(function(x){return '<a href="#" data-mq="'+esc(lq(x.i))+'"><span>'+x.c.icon+'</span><span>'+esc(x.i[0])+'<small>'+esc(x.c.short||x.c.name)+' · '+esc(x.i[2])+'</small></span></a>';}).join('')
+  q.onfocus=function(){ if(!q.value.trim()){ box.hidden=false; box.innerHTML=popularHTML(); } };
+  q.onblur=function(){ setTimeout(function(){ if(document.activeElement!==q && !q.value.trim()) box.hidden=true; },200); };
+  box.onmousedown=function(e){ var b=e.target.closest('[data-pop]'); if(!b) return; e.preventDefault(); q.value=b.dataset.pop; q.oninput(); };
+  q.oninput=function(){ var v=q.value.trim(); if(!v){ box.hidden=false; box.innerHTML=popularHTML(); return; }
+    var cats=findCats(v).slice(0,2), hits=findListings(v).filter(function(x){return x.i[2]!=='Online';}).slice(0,6);
+    box.hidden=false; box.innerHTML=cats.map(function(c){return '<a href="#" data-mq="'+esc(CATQ[c.id]||c.name+' Johor Bahru')+'"><span>'+c.icon+'</span><span><b>'+esc(c.name)+'</b><small>Show on map</small></span></a>';}).join('')+hits.map(function(x){return '<a href="#" data-mq="'+esc(lq(x.i))+'"><span>'+x.c.icon+'</span><span>'+esc(x.i[0])+'<small>'+esc(x.c.short||x.c.name)+' · '+esc(x.i[2])+'</small></span></a>';}).join('')
       +'<a href="#" data-mq="'+esc(v)+'"><span>🔎</span><span>Search the map for “'+esc(v)+'”</span></a>'; };
   q.onkeydown=function(e){ if(e.key==='Enter'&&q.value.trim()){ e.preventDefault(); go(q.value.trim()); } };
   box.onclick=function(e){ var a=e.target.closest('[data-mq]'); if(!a) return; e.preventDefault(); go(a.dataset.mq); };

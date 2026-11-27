@@ -1,0 +1,63 @@
+/* MYSG Community data.
+   MYSG_TERMS: words newcomers to JB hear. [term, plain meaning, tag, related category id ('' if none)]
+   Tags: Travel, Gov, Money, Daily Life, Food, Slang. The category id lets search show matching listings too. */
+window.MYSG_TERMS = [
+ ['CIQ','Customs, Immigration and Quarantine. The border checkpoint; in JB it usually means BSI at the Causeway.','Travel','transport'],
+ ['BSI (Bangunan Sultan Iskandar)','The Malaysian checkpoint at the Causeway, next to JB Sentral.','Travel','transport'],
+ ['KSAB (Kompleks Sultan Abu Bakar)','The Malaysian checkpoint at the Second Link, near Gelang Patah.','Travel','transport'],
+ ['Woodlands Checkpoint','Singapore’s checkpoint at the Causeway.','Travel','transport'],
+ ['Tuas Checkpoint','Singapore’s checkpoint at the Second Link.','Travel','transport'],
+ ['Causeway','The road and rail link between JB city centre and Woodlands in Singapore.','Travel','transport'],
+ ['Second Link','The second road bridge to Singapore, between Gelang Patah in Johor and Tuas.','Travel','transport'],
+ ['RTS Link','The cross-border train line between Bukit Chagar in JB and Woodlands North in Singapore.','Travel','transport'],
+ ['KTM Shuttle Tebrau','KTM train between JB Sentral and Woodlands Train Checkpoint.','Travel','transport'],
+ ['Bas Muafakat Johor','Bus service run by the Johor state government, with routes around JB and other districts.','Travel','transport'],
+ ['VEP (Vehicle Entry Permit)','Permit that foreign cars, such as Singapore cars, need to drive in Malaysia. Uses an RFID tag.','Travel','transport'],
+ ['Autopass','Singapore card that foreign vehicles use to pay fees and tolls when entering Singapore.','Travel','transport'],
+ ['E-hailing','Booking a ride through an app, such as Grab.','Travel','transport'],
+ ['Grab','The main app for rides and food delivery in Malaysia and Singapore.','Daily Life','transport'],
+ ['Touch ’n Go','Malaysian card and e-wallet for tolls, parking, transport and payments.','Money','money'],
+ ['DuitNow','Malaysia’s instant bank transfer and QR payment system.','Money','money'],
+ ['Ringgit / RM','Malaysian currency (MYR). Prices are written as RM.','Money','money'],
+ ['SGD rate','The Singapore dollar to ringgit exchange rate.','Money','money'],
+ ['Money changer','Licensed shop that exchanges currency, common in JB malls.','Money','money'],
+ ['Cukai pintu','Property assessment tax paid to the local city council.','Money','property'],
+ ['Cukai tanah (quit rent)','Yearly land tax paid to the state land office.','Money','property'],
+ ['MyKad / IC','Malaysian identity card. People usually call it “IC”.','Gov','gov'],
+ ['MM2H','Malaysia My Second Home: a long-stay visa programme for foreigners.','Gov','gov'],
+ ['DE Rantau','Malaysia’s digital nomad pass programme, run by MDEC.','Gov','gov'],
+ ['Imigresen','Malay for the Immigration Department (Jabatan Imigresen).','Gov','gov'],
+ ['LHDN','Lembaga Hasil Dalam Negeri: Malaysia’s income tax office.','Gov','gov'],
+ ['JPJ','Jabatan Pengangkutan Jalan: the Road Transport Department for driving licences and road tax.','Gov','gov'],
+ ['Balai polis','Police station.','Gov','gov'],
+ ['Klinik kesihatan','Government health clinic.','Daily Life','health'],
+ ['TNB','Tenaga Nasional: Malaysia’s electricity company.','Daily Life','utilities'],
+ ['Ranhill SAJ','The water supply company in Johor. People often just say “SAJ”.','Daily Life','utilities'],
+ ['Unifi','Home fibre internet from TM (Telekom Malaysia).','Daily Life','telco'],
+ ['Cuti umum','Public holiday.','Daily Life',''],
+ ['Surau','Small Muslim prayer room, found in malls and petrol stations.','Daily Life',''],
+ ['Pasar malam','Night market with food and stalls, held on set days of the week.','Food','shopping'],
+ ['Mamak','Indian-Muslim restaurant, often open late or 24 hours.','Food','shopping'],
+ ['Kopitiam','Traditional coffee shop.','Food','shopping'],
+ ['Makan','To eat, or food.','Food',''],
+ ['Tapau','Take away: food packed to go.','Food',''],
+ ['Roti canai','Flaky flatbread served with curry, a breakfast favourite.','Food',''],
+ ['Teh tarik','“Pulled” sweet milk tea.','Food',''],
+ ['Lepak','To hang out or relax.','Slang',''],
+ ['Jom','Let’s go, or come on.','Slang',''],
+ ['Lah','Word added to the end of a sentence for emphasis, as in “OK lah”.','Slang',''],
+ ['Boleh','Can, or possible.','Slang',''],
+ ['Abang / Kakak','“Big brother” and “big sister”: a polite way to call an older man or woman, such as a waiter.','Slang',''],
+];
+
+/* MYSG_THREADS: Community topics. Each opens a WhatsApp Community group.
+   To go live, paste the invite link (must start with https://chat.whatsapp.com/) into "link".
+   Topics with no link show "Coming Soon". */
+window.MYSG_THREADS = [
+ {name:'Moving Day Tips', desc:'Packing, movers and your first week in JB.', link:''},
+ {name:'Schools in JB', desc:'Choosing schools, fees, transport and term dates.', link:''},
+ {name:'Crossing the Causeway', desc:'Checkpoints, queues, buses, RTS Link and driving.', link:''},
+ {name:'Renting in JB', desc:'Areas, agents, deposits and tenancy agreements.', link:''},
+ {name:'Banking & SIM Cards', desc:'Opening accounts, transfers, phone plans and internet.', link:''},
+ {name:'Ask the Community', desc:'Anything else about living in Johor.', link:''},
+];

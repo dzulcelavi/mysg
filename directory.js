@@ -2,7 +2,7 @@
    [name, short description, area, website (or "" if none)]
    Every listing also gets a "Map" button that searches Google Maps for it. */
 window.MYSG_DIR = [
- {id:'relocation', short:'Relocation', icon:'🧭', name:'Relocation Help', items:[
+ {id:'relocation', tags:'embassy consulate high commission move moving relocate relocation register singaporean malaysian help', short:'Relocation', icon:'🧭', name:'Relocation Help', items:[
   ['Move to Malaysia','Relocation advice, webinars, house and school tours, and concierge for families and businesses moving from Singapore to Johor.','Johor Bahru','https://movetomalaysia.com/'],
   ['Consulate-General of Singapore in Johor Bahru','Consulate of Singapore in JB: passports and help for Singaporeans in Johor.','Johor Bahru','https://jb.mfa.gov.sg/'],
   ['High Commission of Singapore in Kuala Lumpur','Embassy-level mission of Singapore in Malaysia.','Kuala Lumpur','https://kl.mfa.gov.sg/'],
@@ -12,7 +12,7 @@ window.MYSG_DIR = [
   ['TalentCorp Malaysia','Government agency for talent, including the Returning Expert Programme for Malaysians moving home.','Nationwide','https://www.talentcorp.com.my/'],
   ['MIDA (Malaysian Investment Development Authority)','Government agency for businesses setting up or relocating to Malaysia.','Nationwide','https://www.mida.gov.my/'],
  ]},
- {id:'gov', short:'Visas & Gov', icon:'🏛️', name:'Visas & Gov', items:[
+ {id:'gov', tags:'visa permit pass mm2h de rantau digital nomad immigration imigresen passport tax lhdn ic mykad licence license driving licence jpj government', short:'Visas & Gov', icon:'🏛️', name:'Visas & Gov', items:[
   ['Immigration Department of Malaysia','Visas, passes and immigration services.','Nationwide','https://www.imi.gov.my'],
   ['Expatriate Services Division (ESD)','Employment passes and dependant passes for expatriates working in Malaysia.','Online','https://esd.imi.gov.my/portal/'],
   ['MM2H (Malaysia My Second Home)','Official long-stay visa programme.','Nationwide','https://www.mm2h.gov.my'],
@@ -21,13 +21,13 @@ window.MYSG_DIR = [
   ['LHDN (Inland Revenue Board)','Income tax registration and filing.','Nationwide','https://www.hasil.gov.my'],
   ['JPJ (Road Transport Department)','Driving licences, road tax and vehicle registration.','Nationwide','https://www.jpj.gov.my'],
  ]},
- {id:'property', short:'Property', icon:'🏠', name:'Property Portals', items:[
+ {id:'property', tags:'rent rental sewa buy house rumah condo apartment landed agent home property', short:'Property', icon:'🏠', name:'Property Portals', items:[
   ['PropertyGuru Malaysia','Homes for rent and sale.','Nationwide','https://www.propertyguru.com.my'],
   ['iProperty','Homes for rent and sale.','Nationwide','https://www.iproperty.com.my'],
   ['EdgeProp Malaysia','Property listings and market news.','Nationwide','https://www.edgeprop.my'],
   ['Mudah.my','Classifieds, including rentals and second-hand items.','Nationwide','https://www.mudah.my'],
  ]},
- {id:'schools', short:'Schools', icon:'🎓', name:'International Schools', items:[
+ {id:'schools', tags:'school schools sekolah kids children international school kindergarten tadika education', short:'Schools', icon:'🎓', name:'International Schools', items:[
   ['Marlborough College Malaysia','British and IB, boarding.','Iskandar Puteri',''],
   ['Raffles American School','American and IB.','Iskandar Puteri',''],
   ['Forest City International School','American curriculum.','Iskandar Puteri',''],
@@ -51,14 +51,14 @@ window.MYSG_DIR = [
   ['New Bridge International School','British.','Johor Bahru',''],
   ['LUCA International School','British.','Johor Bahru',''],
  ]},
- {id:'health', short:'Hospitals', icon:'🏥', name:'Hospitals & Healthcare', items:[
+ {id:'health', tags:'doctor clinic klinik hospital a&e emergency dentist specialist medical sick healthcare', short:'Hospitals', icon:'🏥', name:'Hospitals & Healthcare', items:[
   ['Gleneagles Hospital Medini Johor','Private tertiary hospital.','Iskandar Puteri','https://gleneagles.com.my/medini-johor'],
   ['KPJ Johor Specialist Hospital','Private specialist hospital.','Johor Bahru',''],
   ['Regency Specialist Hospital','Private specialist hospital.','Masai',''],
   ['Columbia Asia Hospital Tebrau','Private hospital.','Tebrau',''],
   ['Hospital Sultanah Aminah','Main public hospital in Johor Bahru.','Johor Bahru',''],
  ]},
- {id:'money', short:'Banks', icon:'🏦', name:'Banks & Money', items:[
+ {id:'money', tags:'bank bank account open account transfer remit remittance money changer atm e-wallet ewallet touch n go tng', short:'Banks', icon:'🏦', name:'Banks & Money', items:[
   ['Maybank','Malaysia\'s largest bank.','Nationwide','https://www.maybank2u.com.my'],
   ['CIMB','Bank with Malaysia and Singapore presence.','Nationwide','https://www.cimb.com.my'],
   ['Public Bank','Retail bank.','Nationwide','https://www.pbebank.com'],
@@ -68,26 +68,26 @@ window.MYSG_DIR = [
   ['Wise','Multi-currency account and SGD/MYR transfers.','Online','https://wise.com'],
   ['Touch \'n Go eWallet','E-wallet for tolls, parking and payments.','Nationwide','https://www.touchngo.com.my'],
  ]},
- {id:'telco', short:'Internet', icon:'📶', name:'Mobile & Internet', items:[
+ {id:'telco', tags:'sim sim card prepaid postpaid phone plan mobile data wifi fibre fiber broadband internet', short:'Internet', icon:'📶', name:'Mobile & Internet', items:[
   ['Maxis','Mobile and home fibre.','Nationwide','https://www.maxis.com.my'],
   ['CelcomDigi','Mobile and home fibre.','Nationwide','https://www.celcomdigi.com'],
   ['U Mobile','Mobile plans.','Nationwide','https://www.u.com.my'],
   ['Unifi','Home fibre broadband (TM).','Nationwide','https://unifi.com.my'],
   ['TIME','Home fibre broadband.','Nationwide','https://www.time.com.my'],
  ]},
- {id:'utilities', short:'Utilities', icon:'💡', name:'Utilities', items:[
+ {id:'utilities', tags:'electric electricity water gas bill tnb air saj ranhill', short:'Utilities', icon:'💡', name:'Utilities', items:[
   ['TNB (Tenaga Nasional)','Electricity.','Nationwide','https://www.tnb.com.my'],
   ['Ranhill SAJ','Water supply in Johor.','Johor','https://www.ranhillsaj.com.my'],
   ['Gas Malaysia','Piped gas.','Nationwide','https://www.gasmalaysia.com'],
  ]},
- {id:'transport', short:'Transport', icon:'🚆', name:'Getting Around & To SG', items:[
+ {id:'transport', tags:'bus train ktm rts causeway checkpoint ciq grab taxi car vep toll touch n go drive to sg bus to sg singapore', short:'Transport', icon:'🚆', name:'Getting Around & To SG', items:[
   ['RTS Link','Rail link between Bukit Chagar (JB) and Woodlands North (SG).','Johor Bahru','https://www.smrt.com.sg/who-we-are/our-group/rts-operations/rts-link/'],
   ['KTMB Shuttle Tebrau','Train between JB Sentral and Woodlands.','Johor Bahru','https://www.ktmb.com.my'],
   ['Causeway Link','Buses in JB and across the Causeway.','Johor Bahru','https://www.causewaylink.com.my'],
   ['Grab','Ride-hailing and food delivery.','Nationwide','https://www.grab.com/my/'],
   ['VEP (Vehicle Entry Permit)','Permit for Singapore-registered cars entering Malaysia.','Johor','https://www.jpj.gov.my'],
  ]},
- {id:'shopping', short:'Groceries', icon:'🛒', name:'Groceries & Daily Life', items:[
+ {id:'shopping', tags:'supermarket grocery groceries mall malls shopping makan food', short:'Groceries', icon:'🛒', name:'Groceries & Daily Life', items:[
   ['AEON','Malls and supermarkets.','Johor Bahru','https://www.aeonretail.com.my'],
   ['Lotus\'s','Hypermarkets.','Johor Bahru','https://www.lotuss.com.my'],
   ['Jaya Grocer','Supermarket with imported goods.','Johor Bahru','https://www.jayagrocer.com'],
@@ -95,13 +95,13 @@ window.MYSG_DIR = [
   ['Mid Valley Southkey','Shopping mall.','Johor Bahru',''],
   ['Johor Bahru City Square','Shopping mall next to the CIQ.','Johor Bahru',''],
  ]},
- {id:'movers', short:'Movers', icon:'🚚', name:'Movers & Logistics', items:[
+ {id:'movers', tags:'movers moving lorry shipping packing relocate furniture', short:'Movers', icon:'🚚', name:'Movers & Logistics', items:[
   ['Allied Pickfords Malaysia','Household moving and packing, including Johor Bahru and Singapore moves.','Johor Bahru','https://www.allied.com/my/domestic-moving/johor-bahru-moving-services'],
   ['TheLorry','Lorry booking and movers, including Singapore to Johor Bahru cross-border moves.','Nationwide','https://thelorry.com/my/'],
   ['Asian Tigers','International moving and relocation services in Asia.','Nationwide','https://www.asiantigersgroup.com/'],
   ['Seven Seas Worldwide','International shipping of boxes and household goods to Malaysia.','Online','https://www.sevenseasworldwide.com/en-sg/'],
  ]},
- {id:'insurance', short:'Insurance', icon:'🛡️', name:'Insurance', items:[
+ {id:'insurance', tags:'insurance insuran medical card life insurance car insurance takaful', short:'Insurance', icon:'🛡️', name:'Insurance', items:[
   ['AIA Malaysia','Life, medical and health insurance.','Nationwide','https://www.aia.com.my/'],
   ['Great Eastern (Malaysia)','Life, medical and general insurance.','Nationwide','https://www.greateasternlife.com/my/'],
   ['Prudential Malaysia','Life, medical and investment-linked insurance.','Nationwide','https://www.prudential.com.my/'],
