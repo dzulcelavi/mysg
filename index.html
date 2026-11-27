@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MYSG</title>
+<title>MYSG - To JB, made easy.</title>
 <meta name="description" content="MYSG: a directory of companies and services for moving to and settling in Johor, Malaysia.">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#010066">
@@ -128,7 +128,7 @@ var P={};
 P.home=function(){
   var big=AUD[aud].map(function(id){return C[id];});
   var rest=D.filter(function(c){return AUD[aud].indexOf(c.id)<0;}).slice(0,7);
-  return '<h1 class="hl">Moving to Johor, <span>made simple.</span></h1>'
+  return '<h1 class="hl">To JB, <span>made easy.</span></h1>'
   +'<label class="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search '+ALL.length+' companies or services…" autocomplete="off"><div class="sres" id="sres" hidden></div></label>'
   +'<div class="shd"><h2>Popular</h2><div><a href="#areas">By area</a><a href="#all">All services</a></div></div>'
   +'<div class="big">'+big.map(function(c,k){return '<a class="bigt" href="#c-'+c.id+'"><span class="ic" style="background:'+BG[k]+'">'+c.icon+'</span><span><b>'+esc(c.name)+'</b><small>'+count(c)+'</small></span></a>';}).join('')+'</div>'
