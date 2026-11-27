@@ -390,6 +390,6 @@ footer.site,header.top{display:none!important}
 <script src="data-content.js"></script>
 <script src="guides.js"></script>
 <script src="app.js"></script>
-<script>if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+<script>if('serviceWorker' in navigator && location.protocol.startsWith('http')) {let had=!!navigator.serviceWorker.controller;navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{});navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had)location.reload();had=true;});}</script>
 </body>
 </html>
