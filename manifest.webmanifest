@@ -1,7 +1,7 @@
 {
   "name": "MYSG",
   "short_name": "MYSG",
-  "description": "Moving from Singapore to Johor, Malaysia.",
+  "description": "Directory of companies and services for moving to and settling in Johor, Malaysia.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

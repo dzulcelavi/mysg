@@ -1,6 +1,6 @@
 # MYSG
 
-A simple installable web app for people moving from Singapore to Johor, Malaysia. It links to [movetomalaysia.com](https://movetomalaysia.com/).
+An installable directory of companies and services for people moving to and settling in Johor, Malaysia, with a link to [movetomalaysia.com](https://movetomalaysia.com/).
 
 ## Use it
 
@@ -10,5 +10,6 @@ On a phone, open that link and install it: on Android tap **Install** (or the br
 
 ## Files
 
-- `index.html`: the app page, styles and install prompt
+- `index.html`: the app page, search, category filter and install prompt
+- `directory.js`: the listings. Add a company by adding one line to its category.
 - `manifest.webmanifest`, `sw.js`, `icons/`: app install, offline support and icons
