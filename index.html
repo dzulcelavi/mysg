@@ -58,6 +58,8 @@ h1.hl span{color:var(--accent)}
 .promo .chip{display:inline-block;margin-top:8px;background:rgba(255,255,255,.18);border-radius:8px;padding:3px 10px;font:700 .78rem Nunito,sans-serif}
 .promos{margin-top:auto;display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;border-radius:20px}
 .promos::-webkit-scrollbar{display:none}
+.mtmlogo{display:inline-flex;align-items:center;background:#fff;border-radius:10px;padding:3px 8px;margin-top:6px}
+.mtmlogo img{height:clamp(30px,4.6vh,38px);width:auto;display:block}
 .promos .promo{flex:0 0 100%;scroll-snap-align:center;margin-top:0}
 .promo.ad{background:linear-gradient(135deg,#010066 0%,#14206e 100%)}
 .pdots{display:flex;justify-content:center;gap:5px;margin-top:6px}
@@ -141,7 +143,7 @@ P.home=function(){
   +'<div class="big">'+big.map(function(c,k){return '<a class="bigt" href="#c-'+c.id+'"><span class="ic" style="background:'+BG[k]+'">'+c.icon+'</span><span><b>'+esc(c.name)+'</b><small>'+count(c)+'</small></span></a>';}).join('')+'</div>'
   +'<div class="icons">'+rest.map(function(c){return '<a href="#c-'+c.id+'"><span>'+c.icon+'</span>'+esc(c.short||c.name)+'</a>';}).join('')+'<a href="#all"><span>▦</span>More</a></div>'
   +'<div class="promos" id="promos">'
-  +'<a class="promo" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Need help with your move?</div><h3>Visit Move to Malaysia</h3><span class="chip">🌏 movetomalaysia.com</span></a>'
+  +'<a class="promo" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Need help with your move?</div><span class="mtmlogo"><img src="icons/mtm-logo.png" alt="Move to Malaysia"></span><span class="chip">🌏 movetomalaysia.com</span></a>'
   /* Advertise slide: no link, price or contact yet. When ready, turn this div into <a href="CONTACT LINK"> and add the price inside it. */
   +'<div class="promo ad"><span class="tag">Ad space</span><div class="k">Advertise on MYSG</div><h3>Put your business in front of people moving to JB</h3><span class="chip">Featured listing</span></div>'
   +'</div><div class="pdots" id="pdots"><i class="on"></i><i></i></div>';
