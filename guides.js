@@ -1,4 +1,4 @@
-/* Move to Malaysia app: Master Guide pages and interactive tools */
+/* MYSG app: Master Guide pages and interactive tools */
 (function(){
 const M = window.MTM;
 const $ = (s, el=document) => el.querySelector(s);
@@ -65,7 +65,7 @@ const visa = guide({
           <p class="small" style="margin-bottom:4px"><strong>Requirements</strong></p><ul class="ticks small">${v.requirements.map(x=>`<li>${x}</li>`).join('')}</ul>
           <p class="small" style="margin-bottom:4px"><strong>Benefits</strong></p><ul class="ticks small">${v.benefits.map(x=>`<li>${x}</li>`).join('')}</ul><p class="small muted"><strong>Ideal for:</strong> ${v.ideal}</p>`)).join('')}</div>
         ${rest.length?`<h3 style="margin-top:28px">Other options to consider</h3><div class="btns">${rest.map(v=>`<span class="badge">${v.name} · ${v.score}/${M.visaQuiz.length}</span>`).join('')}</div>`:''}
-        <div class="note blue" style="margin-top:24px">Want a second opinion on your visa route? <a href="#svc-concierge"><strong>Johor Move Concierge</strong></a> includes a visa and pass strategy for your nationality and situation.</div>`;
+        <div class="note blue" style="margin-top:24px">Want a second opinion on your visa route? <a href="https://movetomalaysia.com/" target="_blank" rel="noopener"><strong>Johor Move Concierge</strong></a> includes a visa and pass strategy for your nationality and situation.</div>`;
       });
     },
     compare(){ return `<h2>Visa Comparison</h2><p class="muted">Compare Malaysia's main long-stay visa options side by side.</p>${table(['', ...M.visaCompare.cols], M.visaCompare.rows.map(r=>r.map(esc)))}
@@ -126,7 +126,7 @@ const schools = guide({
     curricula(p, root){ wireQuiz(p, M.schoolQuiz, schools.state.quiz, () => schools.redraw(root)); const b=$('[data-showcur]',p); if(b) b.onclick=()=>{ schools.state.cur=b.dataset.showcur; schools.state.tab='comparison'; M.render(); }; },
     comparison(p, root){ [['#fp','price'],['#fl','loc'],['#fc','cur']].forEach(([s,k])=>$(s,p).onchange=e=>{schools.state[k]=e.target.value; schools.redraw(root);}); p.querySelectorAll('[data-sort]').forEach(b=>b.onclick=()=>{ const k=+b.dataset.sort; if(schools.state.sort===k) schools.state.dir = schools.state.dir==='asc'?'desc':'asc'; else { schools.state.sort=k; schools.state.dir='asc'; } schools.redraw(root); }); }
   },
-  after(){ return `<section class="cta" style="border-radius:12px;padding:40px 20px;margin-top:40px;text-align:center"><h2>See the schools in person</h2><p>Walk the campuses and meet admissions teams on a Johor Move eXperience tour.</p><a class="btn white" href="#svc-experience">Book a School Tour</a></section>`; }
+  after(){ return `<section class="cta" style="border-radius:12px;padding:40px 20px;margin-top:40px;text-align:center"><h2>See the schools in person</h2><p>Move to Malaysia runs guided school tours in Johor.</p><a class="btn white" href="https://movetomalaysia.com/" target="_blank" rel="noopener">Book a School Tour</a></section>`; }
 });
 M.guides['mg-schools'] = schools;
 
@@ -369,7 +369,7 @@ const sez = guide({
   tabs:[['overview','Overview'],['zones','Zones'],['incentives','Incentives'],['family-offices','Family'],['news','News'],['faq','FAQ']],
   state:{tab:'overview'},
   panels:Object.fromEntries(['overview','zones','incentives','family-offices','news','faq'].map(t=>[t,()=>`<div class="prose">${M.htmlSez[t]}</div>`])),
-  after(){ return `<section class="cta" style="border-radius:12px;padding:40px 20px;margin-top:40px;text-align:center"><h2>Setting up in the JS-SEZ?</h2><p>Market entry, staff housing and corporate relocation support for businesses moving into Johor.</p><div class="btns"><a class="btn white" href="#contact">Talk to Us</a><a class="btn ghost-white" href="#blog-tax-incentives">Read: Tax incentives</a></div></section>`; }
+  after(){ return `<section class="cta" style="border-radius:12px;padding:40px 20px;margin-top:40px;text-align:center"><h2>Setting up in the JS-SEZ?</h2><p>Market entry, staff housing and corporate relocation support for businesses moving into Johor.</p><div class="btns"><a class="btn white" href="https://movetomalaysia.com/" target="_blank" rel="noopener">Talk to Us</a><a class="btn ghost-white" href="#blog-tax-incentives">Read: Tax incentives</a></div></section>`; }
 });
 M.guides['mg-js-sez'] = sez;
 })();
