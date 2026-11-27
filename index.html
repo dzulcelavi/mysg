@@ -137,7 +137,7 @@ P.home=function(){
   var rest=D.filter(function(c){return AUD[aud].indexOf(c.id)<0;}).slice(0,7);
   return '<h1 class="hl">To JB, <span>made easy.</span></h1>'
   +'<label class="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search '+ALL.length+' companies or services…" autocomplete="off"><div class="sres" id="sres" hidden></div></label>'
-  +'<div class="shd"><h2>Popular</h2><div><a href="#areas">By area</a><a href="#all">All services</a></div></div>'
+  +'<div class="shd"><h2>Popular</h2><div><a href="#areas">By Area</a><a href="#all">All Services</a></div></div>'
   +'<div class="big">'+big.map(function(c,k){return '<a class="bigt" href="#c-'+c.id+'"><span class="ic" style="background:'+BG[k]+'">'+c.icon+'</span><span><b>'+esc(c.name)+'</b><small>'+count(c)+'</small></span></a>';}).join('')+'</div>'
   +'<div class="icons">'+rest.map(function(c){return '<a href="#c-'+c.id+'"><span>'+c.icon+'</span>'+esc(c.short||c.name)+'</a>';}).join('')+'<a href="#all"><span>▦</span>More</a></div>'
   +'<div class="promos" id="promos">'
@@ -152,8 +152,8 @@ P.areas=function(){
   return '<div class="list">'+Object.keys(m).sort(function(a,b){return m[b]-m[a];}).map(function(a){return '<a class="row" href="#a-'+encodeURIComponent(a)+'"><span>📍</span>'+esc(a)+'<small>'+m[a]+'</small></a>';}).join('')+'</div><p class="note">Every listing also has a Map button that opens Google Maps.</p>';
 };
 P.saved=function(){ var s=ALL.filter(function(x){return isSaved(x.i[0]);}); return s.length?s.map(item).join(''):'<p class="empty">Nothing saved yet. Tap 🤍 on any listing to keep it here.</p>'; };
-P.more=function(){ return '<a class="promo" style="margin:4px 0 14px" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Relocation support</div><h3>Visit movetomalaysia.com</h3></a><div class="list"><a class="row" href="#all"><span>▦</span>All services<small>'+D.length+'</small></a><a class="row" href="#areas"><span>📍</span>Browse by area</a><a class="row" href="#saved"><span>❤️</span>Saved</a></div><p class="note">MYSG lists real companies and services to help you move to and settle in Johor. Listings are for information only and are not endorsements. Details change, so check with each company directly.</p>'; };
-var TITLES={all:'All services',areas:'Browse by area',saved:'Saved',more:'More'};
+P.more=function(){ return '<a class="promo" style="margin:4px 0 14px" href="'+MTM+'" target="_blank" rel="noopener"><span class="tag">↗</span><div class="k">Relocation support</div><h3>Visit movetomalaysia.com</h3></a><div class="list"><a class="row" href="#all"><span>▦</span>All Services<small>'+D.length+'</small></a><a class="row" href="#areas"><span>📍</span>Browse by Area</a><a class="row" href="#saved"><span>❤️</span>Saved</a></div><p class="note">MYSG lists real companies and services to help you move to and settle in Johor. Listings are for information only and are not endorsements. Details change, so check with each company directly.</p>'; };
+var TITLES={all:'All Services',areas:'Browse by Area',saved:'Saved',more:'More'};
 function render(){
   var r=(location.hash||'#home').slice(1)||'home', html, title=null, s=$('#screen');
   if(r.indexOf('c-')===0&&C[r.slice(2)]){ var c=C[r.slice(2)]; title=c.icon+' '+c.name; html=c.items.map(function(i){return item({c:c,i:i});}).join(''); }
