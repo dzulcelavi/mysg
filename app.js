@@ -325,8 +325,8 @@ function render(){
   const tk = r.startsWith('mg-')||r==='guides' ? 'guides' : r.startsWith('svc')||r==='services' ? 'services' : r.startsWith('blog') ? 'blog' : r==='home' ? 'home' : 'more';
   document.querySelectorAll('#tabbar [data-t]').forEach(x => x.classList.toggle('on', x.dataset.t===tk));
   $('#mnav').classList.remove('open'); $('#burger').setAttribute('aria-expanded','false');
-  const t = {home:'Move to Malaysia',about:'About',services:'Services',testimonials:'Testimonials',blog:'Blog',media:'Media',contact:'Contact'}[r];
-  document.title = (t && r!=='home' ? t+' | ' : '') + 'Move to Malaysia';
+  const t = {home:'MYSG',about:'About',services:'Services',testimonials:'Testimonials',blog:'Blog',media:'Media',contact:'Contact'}[r];
+  document.title = (t && r!=='home' ? t+' | ' : '') + 'MYSG';
   if(r==='blog') app.querySelectorAll('[data-bf]').forEach(b => b.onclick = () => { blogFilter=b.dataset.bf; render(); });
   if(r==='contact') bindContact(app);
   if(r==='summit-2027') bindSummit(app);
@@ -345,7 +345,7 @@ document.addEventListener('click', e => { if(!e.target.closest('#mnav') && !e.ta
   let deferred=null;
   window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred=e; box.classList.add('show'); });
   const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  if(ios){ $('#installtxt').innerHTML='<strong>Install Move to Malaysia</strong><br>Tap the Share button, then <b>Add to Home Screen</b>.'; $('#installbtn').style.display='none'; setTimeout(()=>box.classList.add('show'),1500); }
+  if(ios){ $('#installtxt').innerHTML='<strong>Install MYSG</strong><br>Tap the Share button, then <b>Add to Home Screen</b>.'; $('#installbtn').style.display='none'; setTimeout(()=>box.classList.add('show'),1500); }
   $('#installbtn').onclick = async () => { if(!deferred) return; deferred.prompt(); await deferred.userChoice; deferred=null; box.classList.remove('show'); };
   $('#installx').onclick = () => { box.classList.remove('show'); try{ localStorage.setItem('mtm-install-x','1'); }catch(e){} };
   window.addEventListener('appinstalled', () => box.classList.remove('show'));

@@ -1,4 +1,4 @@
-# Move to Malaysia
+# MYSG
 
 A web app version of [MoveToMalaysia.com](https://movetomalaysia.com): every page, the blog, and the seven Master Guide tools (visa, schools, property, commuting, cost of living, private transport, JS-SEZ), in the site's own layout and theme.
 
